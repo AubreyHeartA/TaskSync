@@ -42,7 +42,7 @@ export default function Navigation() {
         headerShown: false,
         tabBarShowLabel: true,
         tabBarStyle: {
-          height: 65,
+          height: 70,
           backgroundColor: '#fff', // Adjust to your green background color
           borderTopWidth: 3, // No top border
           borderTopColor: '#5ccb51',
@@ -53,10 +53,10 @@ export default function Navigation() {
         },
         tabBarIcon: ({ focused }) => {
           const icon = customIcons[route.name][focused ? 'active' : 'inactive'];
-          return <Image source={icon} style={{ width: 35, height: 35, marginTop: 7 }} resizeMode="contain" />;
+          return <Image source={icon} style={{ width: 40, height: 40, marginTop: 7 }} resizeMode="contain" />;
         },
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: 13,
           marginBottom: 7, // Adjust this if necessary to align the label
         },
         tabBarActiveTintColor: '#5ccb51', // Active label color
