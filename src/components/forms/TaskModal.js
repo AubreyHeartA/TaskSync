@@ -9,10 +9,13 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 const categoryColors = ['#5ba3f5', '#c388f7', '#f7f488', '#f4a261', '#697aff', '#88f78c', '#f788e1', '#e76f51', '#69edff'];
+
 const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError, categories, setNewCategory, newCategory, handleAddCategory, handleAddTaskAndCategory, handleDeleteCategory}) => { 
     const [selectedCategory, setSelectedCategory] = useState(task.category || ""); 
     const [taskType, setTaskType] = useState("Individual");
     const [selectedColor, setSelectedColor] = useState(task.categoryColor || categoryColors[0]);
+    const [newMember, setNewMember] = useState('');
+    const [members, setMembers] = useState([]);
 
     const handleCategoryChange = (option) => {
         setSelectedCategory(option.value);
@@ -29,6 +32,13 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
     const handleColorSelect = (color) => {
         setSelectedColor(color);
         setTask({ ...task, categoryColor: color });
+    };
+
+    const handleAddMember = () => {
+        if (newMember.trim()) {
+            setMembers([...members, newMember]);
+            setNewMember(''); 
+        }
     };
 
     return ( 
@@ -176,10 +186,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                         />
                         <TouchableOpacity onPress={handleAddMember} style={styles.button}>
                             <Text style={styles.buttonText}>Add Member</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.inputLabel}>Attachments:</Text>
-                        <TouchableOpacity onPress={handleAddAttachment} style={styles.button}>
-                            <Text style={styles.buttonText}>Upload File</Text>
                         </TouchableOpacity>
                     </View>
                 )}
