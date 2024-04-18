@@ -45,7 +45,7 @@ export default function Navigation() {
           height: 65,
           backgroundColor: '#fff', // Adjust to your green background color
           borderTopWidth: 3, // No top border
-          borderTopColor: '#34C759',
+          borderTopColor: '#5ccb51',
           borderTopLeftRadius: 20, // Only rounding the top left corner
           borderTopRightRadius: 20, // Only rounding the top right corner
           position: 'absolute', // Absolute position to float over content
@@ -59,7 +59,7 @@ export default function Navigation() {
           fontSize: 12,
           marginBottom: 7, // Adjust this if necessary to align the label
         },
-        tabBarActiveTintColor: '#34C759', // Active label color
+        tabBarActiveTintColor: '#5ccb51', // Active label color
         tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.5)', // Inactive label color
       })}
     >  

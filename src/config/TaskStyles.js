@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         width: 24,
     }, 
     completedButton: { 
-        backgroundColor: "#008B8B", 
+        backgroundColor: "#02d909", 
     }, 
     buttonText: { 
         color: "#fff", 
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     addButton: { 
         alignItems: "center", 
         justifyContent: "center", 
-        backgroundColor: "#008B8B", 
+        backgroundColor: "#5ccb51", 
         paddingVertical: 15, 
         borderRadius: 10, 
         marginTop: 20, 
@@ -141,10 +141,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         borderRadius: 8,
         borderWidth: 1,
-        borderColor: "#008B8B",
+        borderColor: "#5ccb51",
     },
     selectedCategory: {
-        backgroundColor: "#008B8B",
+        backgroundColor: "#5ccb51",
     },
     selectedCategory2: {
         color: "black",
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     addCategoryButton: {
-        backgroundColor: "#008B8B",
+        backgroundColor: "#5ccb51",
         padding: 10,
         borderRadius: 5,
         alignItems: "center",
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     addButton: {
-        backgroundColor: "#008B8B",
+        backgroundColor: "#5ccb51",
         paddingVertical: 12,
         borderRadius: 10,
         alignItems: "center",
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 5,
         backgroundColor: 'white',
-        borderColor: '#008B8B',
+        borderColor: '#5ccb51',
         borderWidth: 1,
         borderRadius: 5,
     },
@@ -270,11 +270,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#008B8B',
+        borderColor: '#5ccb51',
         borderRadius: 5,
     },
     taskTypeButtonSelected: {
-        backgroundColor: '#008B8B',
+        backgroundColor: '#5ccb51',
     },
     taskTypeButtonText: {
         fontSize: 16,
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     colorOptionSelected: {
-        borderColor: "#008B8B",
+        borderColor: "#5ccb51",
         borderWidth: 2,
     },
     deadlineContainer: {
@@ -354,6 +354,20 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 16,
     },
+    colorPickerContainer: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+    },
+    colorOption: {
+        width: 30,
+        height: 30,
+        borderRadius: 8,
+        marginHorizontal: 5,
+    },
+    colorOptionSelected: {
+        borderWidth: 2,
+        borderColor: 'black', 
+    }
 }); 
 
 export default styles;
