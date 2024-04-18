@@ -32,14 +32,6 @@ const Task = ({ route }) => {
     }
   }, [route.params?.updatedTasks]);
 
-  // After loading tasks, update the counts
-  useEffect(() => {
-    const ongoing = tasks.filter(t => t.status === "Pending").length;
-    const completed = tasks.filter(t => t.status === "Completed").length;
-    setOngoingTasksCount(ongoing);
-    setCompletedTasksCount(completed);
-  }, [tasks]);
-
   const handleAddTask = () => {
     setEditingTask(null);
     setTask({
