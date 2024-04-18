@@ -7,7 +7,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 
 import Navigation from './src/components/navigation/Navigation';
-
+// import LoginScreen from './src/components/forms/LoginScreen';
 export default function App() {
 
 //   const [showLandingPage, setShowLandingPage] = useState(true);
@@ -24,9 +24,9 @@ export default function App() {
 
           <NavigationContainer>
             {/* {showLandingPage ? (
-              <LandingPage onStart={handleStart} />
+              <LoginScreen onStart={handleStart} />
             ) : (
-              <MainNavigator />
+              <Navigation />
             )} */}
             <Navigation />
           </NavigationContainer>

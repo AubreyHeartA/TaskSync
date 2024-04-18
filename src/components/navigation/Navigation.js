@@ -37,7 +37,7 @@ export default function Navigation() {
 
   return (
     <Tab.Navigator
-      initialRouteName="Task"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({      
         headerShown: false,
         tabBarShowLabel: true,

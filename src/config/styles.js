@@ -1,117 +1,134 @@
 const globalstyles = {
-    safeArea: {
-      flex: 1,
-      backgroundColor: '#fff',
-    },
+
+    // Home.js
     container: {
-      flex: 1,
+        flex: 1,
+        backgroundColor: '#fff',
     },
     header: {
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-      padding: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        
     },
-    welcomeText: {
-      fontSize: 22,
-      fontWeight: 'bold',
-      marginLeft: 16,
-      marginTop: 32,
-      color: '#000',
+    logo: {
+        width: 150,
+        height: 30,
     },
-    userName: {
-      fontSize: 22,
-      fontWeight: 'bold',
-      marginLeft: 16,
-      marginBottom: 16,
-      color: '#000',
+    welcome: {
+        padding: 30,
+        fontSize: 20,
+        fontWeight: '500',
     },
-    taskSummaryContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      paddingHorizontal: 16,
+    countContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
-    taskSummary: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 20,
-      margin: 8,
-      borderRadius: 20,
+    ongoingTask: {
+        alignItems: 'center',
+        backgroundColor: '#D7A990',
+        padding: 20,
+        // paddingVertical: 20,
+        // paddingHorizontal: 20,
+        borderRadius: 10
     },
-    ongoing: {
-      backgroundColor: '#fde8e4',
+    completedTask: {
+        alignItems: 'center',
+        backgroundColor: '#29CD66',
+        padding: 20,
+        borderRadius: 10
     },
-    completed: {
-      backgroundColor: '#e4fcef',
+    count: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 20,
+        marginBottom: 5
     },
-    taskCount: {
-      fontSize: 18,
-      fontWeight: '600',
-      color: '#000',
+    counting: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '800',
     },
-    taskLabel: {
-      fontSize: 16,
-      color: '#000',
+    taskText: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: '600',
     },
-    allTasksTitle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      paddingLeft: 16,
-      marginVertical: 16,
+    // Profile.js
+
+    profileHeader: {
+        textAlign: 'center',
+        fontSize: 20,
+        padding: 15
     },
-    taskList: {
-      paddingHorizontal: 16,
+    profileContainer: {
+        alignItems: "center", 
+        padding: 20
     },
-    taskItem: {
-      flexDirection: 'row',
-      padding: 20,
-      marginBottom: 16,
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.23,
-      shadowRadius: 2.62,
-      elevation: 4,
+    greetings: {
+        fontSize: 24, 
+        fontWeight: "bold"
     },
-    priorityIndicator: {
-      width: 16,
-      height: 16,
-      borderRadius: 8,
-      marginRight: 16,
+    displayInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        backgroundColor: '#F0F3F4',
+        marginTop: 20,
     },
-    taskDetails: {
-      flex: 1,
+    label: {
+        fontWeight: '700',
     },
-    taskTitle: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      marginBottom: 4,
+    updateButton: {
+        marginTop: 20,
+        backgroundColor: '#00BF63',
+        padding: 10,
+        borderRadius: 10,
     },
-    taskDate: {
-      fontSize: 14,
-      color: '#757575',
+    actionsContainer: {
+        // marginTop: 10,
+        padding: 20
     },
-    taskCategory: {
-      fontWeight: '600',
-      color: '#fff',
-      backgroundColor: '#b4a5ff',
-      paddingVertical: 6,
-      paddingHorizontal: 12,
-      borderRadius: 15,
-      overflow: 'hidden',
+    actions: {
+        flexDirection: 'row', 
+        alignItems: 'center',
+        padding: 10
     },
-    navigationBar: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      borderTopWidth: 1,
-      borderTopColor: '#ddd',
-      paddingVertical: 10,
+    actionsItem: {
+        marginLeft: 10,
     },
+    centeredView: {
+        backgroundColor: '#fff'
+    },
+    modalView: {
+        padding: 20,        
+    },
+    information: {
+        marginBottom: 20,
+    },
+    textInput: { 
+        borderWidth: 1, 
+        borderColor: 'rgba(0, 0, 0, 0.2)', 
+        padding: 5 
+    },
+    saveButton: {
+        backgroundColor: '#00BF63',
+        padding: 10,
+        borderRadius: 10,
+    },
+    cancelButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 10,
+    },
+    textButton: {
+        color: '#fff',
+        textAlign: 'center',
+        fontWeight: '700',
+    }
 };
+
 
 export default globalstyles;
