@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import styles from "../../config/TaskStyles";
 import TaskModal from "../forms/TaskModal";
 import TaskList from "../forms/TaskList";
+
+const backgroundImage = require("../../../assets/emptyImage.png");
 
 const Task = ({ route }) => {
   const [tasks, setTasks] = useState([]);
@@ -173,7 +175,6 @@ const Task = ({ route }) => {
     } else {
       setFilteredTasks(tasks.filter((t) => t.category.toLowerCase() === selectedCategory.toLowerCase()));
     }
-    saveData();
   };
 
   const renderCategories = () => {
@@ -201,7 +202,7 @@ const Task = ({ route }) => {
 
   const renderTaskList = () => {
     if (filteredTasks.length === 0) {
-      return;
+      return (<ImageBackground source={backgroundImage} style={styles.backgroundImage}></ImageBackground>);
     }
 
     return (
@@ -216,17 +217,16 @@ const Task = ({ route }) => {
 
   return (
     <View style={styles.container}>
-
       {renderCategories()}
-      {renderTaskList(filteredTasks)} 
-
+      {renderTaskList(filteredTasks)}
+  
       <TouchableOpacity
         style={styles.addButton} 
         onPress={handleAddTask}
       >
         <Text style={[styles.addButtonText, { fontSize: 16 }]}>Add Task</Text>
       </TouchableOpacity>
-
+  
       <TaskModal
         modalVisible={modalVisible}
         task={task}

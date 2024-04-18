@@ -47,26 +47,14 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                     values={['Individual', 'Team']}
                     selectedIndex={taskType === 'Individual' ? 0 : 1}
                     onChange={(event) => {
+                        const newIndex = event.nativeEvent.selectedSegmentIndex;
                         setTaskType(event.nativeEvent.selectedSegmentIndex === 0 ? 'Individual' : 'Team');
                     }}
                     style={styles.segmentedControl}
-                    activeSegmentBackgroundColor='#00C853'
+                    fontStyle={styles.segmentedControlText}
+                    activeFontStyle={{color: '#fff'}}
+                    tintColor="#2ECC71"
                 />
-
-                <View style={{ flexDirection: "row", justifyContent: "space-around", marginBottom: 20 }}>
-                    <TouchableOpacity
-                        style={[styles.button, taskType === "Individual" ? styles.selectedButton : {}]}
-                        onPress={() => setTaskType("Individual")}
-                    >
-                        <Text style={styles.buttonText}>Individual</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.button, taskType === "Team" ? styles.selectedButton : {}]}
-                        onPress={() => setTaskType("Team")}
-                    >
-                        <Text style={styles.buttonText}>Team</Text>
-                    </TouchableOpacity>
-                </View>
 
                 <Text style={styles.inputLabel}>Title:</Text>
                 <TextInput 
@@ -86,7 +74,7 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
 
                 <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                     <View style={{ flex: 1, marginRight: 10 }}>
-                        <Text style={styles.inputLabel}>Category: <Text style={{color: '#5ccb51'}}> {selectedCategory} </Text></Text>
+                        <Text style={styles.inputLabel}>Category: <Text style={{color: '#2ECC71'}}> {selectedCategory} </Text></Text>
                         <ModalSelector
                             data={categories.map((category, index) => ({
                                 key: index,
