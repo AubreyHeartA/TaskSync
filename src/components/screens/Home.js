@@ -9,7 +9,7 @@ export default function Home() {
     <ScrollView style={styles.container}>
         <View style={styles.header}>
             <Image style={styles.logo} source={require('./../../../assets/banner.png')} resizeMode='contain' />
-            {/* <Icon source="magnify" size={24} color="black" />  */}
+            {/* <Icon source="magnify" size={24} color="black" /> s */}
         </View>
 
         <Text style={styles.welcome}>Welcome Back, User 001!</Text>
@@ -42,3 +42,4 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create(globalstyles)
+

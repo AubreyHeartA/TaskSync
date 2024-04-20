@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+// import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 
 import Navigation from './src/components/navigation/Navigation';
@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <PaperProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* <GestureHandlerRootView style={{ flex: 1 }}> */}
         <SafeAreaView style={styles.container}>
           <StatusBar style="auto" />
 
@@ -31,7 +31,7 @@ export default function App() {
             <Navigation />
           </NavigationContainer>
         </SafeAreaView>
-      </GestureHandlerRootView>
+      {/* </GestureHandlerRootView> */}
     </PaperProvider>
   );
 }

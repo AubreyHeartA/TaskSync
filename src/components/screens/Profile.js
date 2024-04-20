@@ -14,32 +14,39 @@ import { Icon, Button, Divider, List } from "react-native-paper";
 
 import globalstyles from "../../config/styles";
 
-export default function ProfileScreen() {
+export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
 
     const [firstName, setFirstName] = useState("Firstname");
-    const [lastName, setLastName] = useState("lastname");
+    const [lastName, setlastName] = useState("lastname");
     const [workEmail, setWorkEmail] = useState("set email");
 
-      // Simulating initial account information
-    const initialAccountInfo = {
-        firstName: firstName,
-        lastName: lastName,
-        workEmail: workEmail,
-    };
+    // this is just a test -- this is originally to fetch data an update it
+    // this function posts an info to the db
+    // http://192.168.16.102:3000/api/profile 
 
-    useEffect(() => {
-        // Update state variables with initial account information when modal is opened
-        if (modalVisible) {
-        setFirstName(initialAccountInfo.firstName);
-        setLastName(initialAccountInfo.lastName);
-        setWorkEmail(initialAccountInfo.workEmail);
-        }
-    }, [modalVisible]);
-
-    const saveChanges = () => {
+    const saveChanges = async () => {
+    try {
+        const response = await fetch('http://192.168.16.102:3000/api/profile', {  // Replace <express-server-ip> with your server's IP and port
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                firstName: firstName,
+                lastName: lastName,
+                workEmail: workEmail,
+            }),
+        });
+        const json = await response.json();
+        console.log('Profile Update Response:', json);
         setModalVisible(false);
-    };
+    } catch (error) {
+        console.error('Error updating profile:', error);
+    }
+};
+
+    
 
   return (
     <ScrollView
@@ -116,8 +123,7 @@ export default function ProfileScreen() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="Juan"
-                            onChangeText={setFirstName}
-                            value={firstName}
+                            onChangeText={text => setFirstName(text)}
                         />
                     </View>
                     <View style={styles.information}>
@@ -125,8 +131,7 @@ export default function ProfileScreen() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="de la Cruz"
-                            onChangeText={setLastName}
-                            value={lastName}
+                            onChangeText={text => setlastName(text)}
                         />
                     </View>
                     <View style={styles.information}>
@@ -134,8 +139,7 @@ export default function ProfileScreen() {
                         <TextInput
                             style={styles.textInput}
                             placeholder="juandelacruz@gmail.com"
-                            onChangeText={setWorkEmail}
-                            value={workEmail}
+                            onChangeText={text => setWorkEmail(text)}
                         />
                     </View>
 
