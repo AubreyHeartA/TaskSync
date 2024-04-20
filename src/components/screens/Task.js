@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from "../../config/TaskStyles";
 import TaskModal from "../forms/TaskModal";
 import TaskList from "../forms/TaskList";
-import TaskItem from "../forms/TaskItem";
+
+const backgroundImage = require("../../../assets/emptyImage.png");
 
 const Task = ({ route }) => {
   const [tasks, setTasks] = useState([]);
@@ -25,9 +25,6 @@ const Task = ({ route }) => {
   const [filteredTasks, setFilteredTasks] = useState([]); 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newCategory, setNewCategory] = useState("");
-  const [ongoingTasksCount, setOngoingTasksCount] = useState(0);
-  const [completedTasksCount, setCompletedTasksCount] = useState(0);
-  const [searchQuery, setSearchQuery] = useState('');
 
   const navigation = useNavigation();
 
@@ -36,50 +33,6 @@ const Task = ({ route }) => {
       setTasks(route.params.updatedTasks);
     }
   }, [route.params?.updatedTasks]);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const savedTasks = await AsyncStorage.getItem('tasks');
-        const savedCategories = await AsyncStorage.getItem('categories');
-
-        if (savedTasks) {
-          setTasks(JSON.parse(savedTasks));
-          setFilteredTasks(JSON.parse(savedTasks));
-        }
-
-        if (savedCategories) {
-          setCategories(JSON.parse(savedCategories));
-        }
-      } catch (error) {
-        console.error('Error loading data:', error);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  // After loading tasks, update the counts
-  useEffect(() => {
-    const ongoing = tasks.filter(t => t.status === "Pending").length;
-    const completed = tasks.filter(t => t.status === "Completed").length;
-    setOngoingTasksCount(ongoing);
-    setCompletedTasksCount(completed);
-  }, [tasks]);
-
-  // Save tasks and categories to AsyncStorage whenever they change
-  useEffect(() => {
-    const saveData = async () => {
-      try {
-        await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-        await AsyncStorage.setItem('categories', JSON.stringify(categories));
-      } catch (error) {
-        console.error('Error saving data:', error);
-      }
-    };
-
-    saveData();
-  }, [tasks, categories]);
 
   const handleAddTask = () => {
     setEditingTask(null);
@@ -159,13 +112,10 @@ const Task = ({ route }) => {
       });
       setModalVisible(false);
       setValidationError(false);
-  
-
       navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
     } else {
       setValidationError(true);
     }
-    saveData();
   };
   
 
@@ -225,16 +175,6 @@ const Task = ({ route }) => {
     } else {
       setFilteredTasks(tasks.filter((t) => t.category.toLowerCase() === selectedCategory.toLowerCase()));
     }
-    saveData();
-  };
-
-  const saveData = async () => {
-    try {
-      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
-      await AsyncStorage.setItem('categories', JSON.stringify(categories));
-    } catch (error) {
-      console.error('Error saving data to AsyncStorage:', error);
-    }
   };
 
   const renderCategories = () => {
@@ -262,7 +202,7 @@ const Task = ({ route }) => {
 
   const renderTaskList = () => {
     if (filteredTasks.length === 0) {
-      return;
+      return (<ImageBackground source={backgroundImage} style={styles.backgroundImage}></ImageBackground>);
     }
 
     return (
@@ -277,17 +217,16 @@ const Task = ({ route }) => {
 
   return (
     <View style={styles.container}>
-
       {renderCategories()}
-      {renderTaskList(filteredTasks)} 
-
+      {renderTaskList(filteredTasks)}
+  
       <TouchableOpacity
         style={styles.addButton} 
         onPress={handleAddTask}
       >
         <Text style={[styles.addButtonText, { fontSize: 16 }]}>Add Task</Text>
       </TouchableOpacity>
-
+  
       <TaskModal
         modalVisible={modalVisible}
         task={task}

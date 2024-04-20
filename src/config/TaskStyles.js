@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
     container: { 
         flex: 1, 
         padding: 20, 
+        paddingBottom: 80,
         backgroundColor: "#f7f7f7", 
     }, 
     title: { 
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
         width: 24,
     }, 
     completedButton: { 
-        backgroundColor: "#008B8B", 
+        backgroundColor: "#2ECC71", 
     }, 
     buttonText: { 
         color: "#fff", 
@@ -89,13 +90,14 @@ const styles = StyleSheet.create({
         width: 30,
     }, 
     addButton: { 
-        alignItems: "center", 
+        position: "absolute",
+        left: 20,              // Left position
+        right: 20,             // Right position
+        bottom: 20, 
         justifyContent: "center", 
-        backgroundColor: "#008B8B", 
+        backgroundColor: "#2ECC71", 
         paddingVertical: 15, 
-        borderRadius: 10, 
-        marginTop: 20, 
-        marginBottom: 10,
+        borderRadius: 10,
     }, 
     addButtonText: { 
         color: "#fff", 
@@ -111,14 +113,15 @@ const styles = StyleSheet.create({
         borderWidth: 1, 
         borderColor: "#ccc", 
         padding: 10, 
-        marginBottom: 10, 
-        borderRadius: 5, 
+        marginBottom: 15, 
+        borderRadius: 10, 
         fontSize: 16, 
     }, 
     inputLabel: { 
         fontSize: 16, 
         fontWeight: "bold", 
-        marginBottom: 5,
+        marginBottom: 10,
+        marginTop: 0,
     }, 
     errorText: { 
         color: "#FF3B30", 
@@ -141,10 +144,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         borderRadius: 8,
         borderWidth: 1,
-        borderColor: "#008B8B",
+        borderColor: "#2ECC71",
     },
     selectedCategory: {
-        backgroundColor: "#008B8B",
+        backgroundColor: "#2ECC71",
     },
     selectedCategory2: {
         color: "black",
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
     newCategoryContainer: {
         flexDirection: "row",
         alignItems: "center",
+        marginBottom: 15,
     },
     newCategoryInput: {
         flex: 1,
@@ -167,8 +171,8 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     addCategoryButton: {
-        backgroundColor: "#008B8B",
-        padding: 10,
+        backgroundColor: "#2ECC71",
+        padding: 12,
         borderRadius: 5,
         alignItems: "center",
         justifyContent: "center",
@@ -177,11 +181,11 @@ const styles = StyleSheet.create({
     },
     addCategoryButtonText: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: "bold",
     },
     addButton: {
-        backgroundColor: "#008B8B",
+        backgroundColor: "#2ECC71",
         paddingVertical: 12,
         borderRadius: 10,
         alignItems: "center",
@@ -224,7 +228,7 @@ const styles = StyleSheet.create({
     },
     deleteCategoryButtonText: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: "bold",
     },
     rightActionContainer: {
@@ -258,11 +262,19 @@ const styles = StyleSheet.create({
     },
     segmentedControl: {
         margin: 10,
+        marginTop: 0,
+        marginBottom: 15,
         padding: 5,
         backgroundColor: 'white',
-        borderColor: '#008B8B',
+        borderColor: '#2ECC71',
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 10,
+        height: 45,
+    },
+    segmentedControlText: {
+        fontSize: 15,  
+        fontWeight: '500',  
+        color: '#333',  
     },
     taskTypeButton: {
         flex: 1,
@@ -270,11 +282,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#008B8B',
+        borderColor: '#2ECC71',
         borderRadius: 5,
     },
     taskTypeButtonSelected: {
-        backgroundColor: '#008B8B',
+        backgroundColor: '#2ECC71',
     },
     taskTypeButtonText: {
         fontSize: 16,
@@ -290,9 +302,9 @@ const styles = StyleSheet.create({
     },
     priorityButton: {
         borderWidth: 1,
-        borderRadius: 20,
+        borderRadius: 15,
         paddingVertical: 8,
-        paddingHorizontal: 16,
+        paddingHorizontal: 20,
         backgroundColor: "#f0f0f0",
     },
     priorityLow: {
@@ -312,18 +324,13 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#333",
     },
-    categoryColorPicker: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-    },
     colorOption: {
         width: 30,
         height: 30,
         borderRadius: 15,
     },
     colorOptionSelected: {
-        borderColor: "#008B8B",
+        borderColor: "#2ECC71",
         borderWidth: 2,
     },
     deadlineContainer: {
@@ -354,6 +361,20 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 16,
     },
+    colorPickerContainer: {
+        flexDirection: 'row',
+        marginBottom: 15,
+    },
+    colorOption: {
+        width: 30,
+        height: 30,
+        borderRadius: 8,
+        marginHorizontal: 5,
+    },
+    colorOptionSelected: {
+        borderWidth: 2,
+        borderColor: 'black', 
+    }
 }); 
 
 export default styles;

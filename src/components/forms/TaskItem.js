@@ -45,7 +45,7 @@ const TaskItem = ({ task, handleEditTask, handleToggleCompletion, handleDeleteTa
           <Feather
             name={task.status === "Completed" ? "check-circle" : "circle"}
             size={20}
-            color={task.status === "Completed" ? "#fff" : "#008B8B"}
+            color={task.status === "Completed" ? "#fff" : "#5ccb51"}
           />
         </TouchableOpacity>
         <View style={styles.taskTextContainer}>
