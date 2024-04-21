@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
         marginBottom: 10, 
         padding: 15, 
         borderRadius: 10, 
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        elevation: 2,
     }, 
     taskTextContainer: { 
         flex: 1, 
@@ -347,6 +352,24 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "bold",
         color: "#333",
+    },
+    taskPriorityIndicatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    priorityIndicator: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 20,
+        alignSelf: 'flex-start', // Ensures that the tag doesn't stretch to the width of the container
+        marginRight: 10, // Adds a margin to the right of the tag
+        marginBottom: 6, // Optional: if you want to add a margin below the tag
+    },
+    priorityText: {
+        color: '#fff', // White text for the priority indicator
+        fontWeight: 'bold',
+        fontSize: 12,
     },
     colorOption: {
         width: 30,

@@ -6,6 +6,19 @@ import { RectButton } from "react-native-gesture-handler";
 import styles from "../../config/TaskStyles";
 
 const TaskItem = ({ task, handleEditTask, handleToggleCompletion, handleDeleteTask }) => {
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case 'High':
+        return '#FF3B30'; 
+      case 'Medium':
+        return '#FFCC00'; 
+      case 'Low':
+        return '#34C759'; 
+      default:
+        return '#C7C7CC'; 
+    }
+  };
+  
   const renderRightActions = (progress, dragX) => {
     const trans = dragX.interpolate({
       inputRange: [0, 50, 100],
@@ -49,14 +62,12 @@ const TaskItem = ({ task, handleEditTask, handleToggleCompletion, handleDeleteTa
           />
         </TouchableOpacity>
         <View style={styles.taskTextContainer}>
-          <Text
-            style={[
-              styles.taskText,
-              task.status === "Completed" && styles.completedTaskText,
-            ]}
-          >
-            {task.title}
-          </Text>
+          <View style={styles.priorityContainer}>
+            <View style={[styles.priorityIndicator, { backgroundColor: getPriorityColor(task.priority) }]}>
+              <Text style={styles.priorityText}>{task.priority}</Text>
+            </View>
+          </View>
+          <Text style={styles.taskText}>{task.title}</Text>
           <Text style={styles.taskDescription}>{task.description}</Text>
           <Text style={styles.taskStatus}>Status: {task.status}</Text>
           <Text style={styles.taskDeadline}>Deadline: {task.deadline}</Text>
