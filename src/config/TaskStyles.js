@@ -196,13 +196,37 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-    cancelButton: {
-        backgroundColor: "#D24545",
-        paddingVertical: 12,
+    buttonContainerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+    },
+    cancelButtonTextSideBySide: {
+        color: "#333", // Black color for text
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    addButtonSideBySide: {
+        flex: 1, // Take up half the space
+        marginTop: 10,
+        marginLeft: 10,
+        backgroundColor: "#2ECC71",
+        paddingVertical: 10,
         borderRadius: 10,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    cancelButtonSideBySide: {
+        flex: 1, // Take up half the space
+        marginTop: 10,
+        marginRight: 10,
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "black",
+        paddingVertical: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     datePicker: {
         borderColor: "#ccc",
@@ -360,20 +384,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 16,
-    },
-    colorPickerContainer: {
-        flexDirection: 'row',
-        marginBottom: 15,
-    },
-    colorOption: {
-        width: 30,
-        height: 30,
-        borderRadius: 8,
-        marginHorizontal: 5,
-    },
-    colorOptionSelected: {
-        borderWidth: 2,
-        borderColor: 'black', 
     }
 }); 
 

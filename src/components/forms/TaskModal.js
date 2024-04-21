@@ -5,15 +5,10 @@ import ModalSelector from 'react-native-modal-selector';
 import DatePicker from "react-native-modern-datepicker"; 
 import { Feather } from "@expo/vector-icons";
 import SegmentedControl from '@react-native-community/segmented-control';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-
-
-const categoryColors = ['#5ba3f5', '#c388f7', '#f7f488', '#f4a261', '#697aff', '#88f78c', '#f788e1', '#e76f51', '#69edff'];
 
 const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError, categories, setNewCategory, newCategory, handleAddCategory, handleAddTaskAndCategory, handleDeleteCategory}) => { 
     const [selectedCategory, setSelectedCategory] = useState(task.category || ""); 
     const [taskType, setTaskType] = useState("Individual");
-    const [selectedColor, setSelectedColor] = useState(task.categoryColor || categoryColors[0]);
     const [newMember, setNewMember] = useState('');
     const [members, setMembers] = useState([]);
 
@@ -26,12 +21,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
         setNewCategory("");
         setSelectedCategory("");
         handleDeleteCategory(selectedCategory);
-    };
-
-    // Function to handle color selection
-    const handleColorSelect = (color) => {
-        setSelectedColor(color);
-        setTask({ ...task, categoryColor: color });
     };
 
     const handleAddMember = () => {
@@ -119,23 +108,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.inputLabel}>Category Color:</Text>
-                <View style={styles.colorPickerContainer}>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {categoryColors.map((color, index) => (
-                        <TouchableOpacity
-                        key={index}
-                        style={[
-                            styles.colorOption,
-                            { backgroundColor: color },
-                            selectedColor === color && styles.colorOptionSelected
-                        ]}
-                        onPress={() => handleColorSelect(color)}
-                        />
-                    ))}
-                    </ScrollView>
-                </View>
-
                 <Text style={styles.inputLabel}>Priority:</Text>
                 <View style={styles.priorityContainer}>
                     <TouchableOpacity
@@ -194,21 +166,25 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                 {validationError && ( 
                     <Text style={styles.errorText}> Please fill in all fields correctly. </Text> 
                 )}
-                <TouchableOpacity
-                    style={styles.addButton}
-                    onPress={handleAddTaskAndCategory}
-                >
-                    <Text style={styles.buttonText}>
-                    {task.id ? "Update" : "Add"}
-                    </Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.cancelButton}
-                    onPress={handleCancel}
-                >
-                    <Text style={styles.buttonText}>Cancel</Text>
-                </TouchableOpacity>
+                <View style={styles.buttonContainerRow}>
+                    <TouchableOpacity
+                        style={styles.cancelButtonSideBySide}
+                        onPress={handleCancel}
+                    >
+                        <Text style={styles.cancelButtonTextSideBySide}>Cancel</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.addButtonSideBySide}
+                        onPress={handleAddTaskAndCategory}
+                    >
+                        <Text style={styles.buttonText}>
+                            {task.id ? "Update" : "Create"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
             </ScrollView>
         </View> 
         </Modal> 
