@@ -384,7 +384,37 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 10,
         fontSize: 16,
-    }
+    },
+    searchBarContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 10,
+        marginBottom: 10,
+        marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 5,
+    },
+    searchBar: {
+        flex: 1,
+        marginLeft: 10,
+        fontSize: 16,
+    },
+    searchIconContainer: {
+        height: 30,
+        width: 30,
+        borderRadius: 15,
+        backgroundColor: '#2ECC71', // Or any color you want for the background
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    searchIcon: {
+        color: 'white',
+    },
 }); 
 
 export default styles;
