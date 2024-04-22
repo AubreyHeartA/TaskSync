@@ -11,6 +11,7 @@ import {
   Modal,
 } from "react-native";
 import { Icon, Button, Divider, List } from "react-native-paper";
+import * as Linking from "expo-linking";
 
 import globalstyles from "../../config/styles";
 
@@ -24,29 +25,60 @@ export default function Profile() {
     // this is just a test -- this is originally to fetch data an update it
     // this function posts an info to the db
     // http://192.168.16.102:3000/api/profile 
-
-    const saveChanges = async () => {
-    try {
-        const response = await fetch('http://192.168.16.102:3000/api/profile', {  // Replace <express-server-ip> with your server's IP and port
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                firstName: firstName,
-                lastName: lastName,
-                workEmail: workEmail,
-            }),
-        });
-        const json = await response.json();
-        console.log('Profile Update Response:', json);
-        setModalVisible(false);
-    } catch (error) {
-        console.error('Error updating profile:', error);
-    }
-};
+    // http://192.168.1.26:3000/profile
 
     
+    // const saveChanges = async () => {
+    //     try {
+    //         const response = await fetch('http://192.168.1.26:3000/api/profile', {  // Replace <express-server-ip> with your server's IP and port
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 firstName: firstName,
+    //                 lastName: lastName,
+    //                 workEmail: workEmail,
+    //             }),
+    //         });
+    //         const json = await response.json();
+    //         console.log('Profile Update Response:', json);
+    //         setModalVisible(false);
+    //     } catch (error) {
+    //         console.error('Error updating profile:', error);
+    //     }
+    // };
+
+    const saveChanges = async () => {
+        try {
+          const response = await fetch('http://192.168.1.26:3000/profile', {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName,
+              lastName,
+              workEmail,
+            }),
+          });
+          const data = await response.json();
+          console.log('Profile Update Response:', data);
+          setModalVisible(false);
+        } catch (error) {
+          console.error('Error updating profile:', error);
+        }
+    };
+
+    const chatWIthUs = () => {
+        Linking.openURL("https://m.me/claricedomingo07")
+          .catch((err) => console.error('An error occurred', err));
+    };
+    
+    const reportIssue = () => {
+    Linking.openURL("mailto:studymate.project101@gmail.com")
+        .catch((err) => console.error('An error occurred', err));
+    };
 
   return (
     <ScrollView
@@ -87,12 +119,12 @@ export default function Profile() {
                 <Text style={styles.actionsItem}>Help and Support</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actions}>
+            <TouchableOpacity style={styles.actions} onPress={chatWIthUs}>
                 <Icon source="message-text-outline" size={24} color="black" />
                 <Text style={styles.actionsItem}>Chat With Us</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.actions}>
+            <TouchableOpacity style={styles.actions} onPress={reportIssue}>
                 <Icon source="exclamation-thick" size={24} color="black" />
                 <Text style={styles.actionsItem}>Report an Issue</Text>
             </TouchableOpacity>
