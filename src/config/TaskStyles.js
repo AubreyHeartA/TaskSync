@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
         marginBottom: 10, 
         padding: 15, 
         borderRadius: 10, 
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+        elevation: 2,
     }, 
     taskTextContainer: { 
         flex: 1, 
@@ -196,13 +201,37 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-    cancelButton: {
-        backgroundColor: "#D24545",
-        paddingVertical: 12,
+    buttonContainerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 0,
+    },
+    cancelButtonTextSideBySide: {
+        color: "#333", // Black color for text
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    addButtonSideBySide: {
+        flex: 1, // Take up half the space
+        marginTop: 10,
+        marginLeft: 10,
+        backgroundColor: "#2ECC71",
+        paddingVertical: 10,
         borderRadius: 10,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    cancelButtonSideBySide: {
+        flex: 1, // Take up half the space
+        marginTop: 10,
+        marginRight: 10,
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "black",
+        paddingVertical: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     datePicker: {
         borderColor: "#ccc",
@@ -324,6 +353,24 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         color: "#333",
     },
+    taskPriorityIndicatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginRight: 10,
+    },
+    priorityIndicator: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 20,
+        alignSelf: 'flex-start', // Ensures that the tag doesn't stretch to the width of the container
+        marginRight: 10, // Adds a margin to the right of the tag
+        marginBottom: 6, // Optional: if you want to add a margin below the tag
+    },
+    priorityText: {
+        color: '#fff', // White text for the priority indicator
+        fontWeight: 'bold',
+        fontSize: 12,
+    },
     colorOption: {
         width: 30,
         height: 30,
@@ -361,20 +408,36 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontSize: 16,
     },
-    colorPickerContainer: {
+    searchBarContainer: {
         flexDirection: 'row',
-        marginBottom: 15,
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 10,
+        marginBottom: 10,
+        marginTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 5,
     },
-    colorOption: {
-        width: 30,
+    searchBar: {
+        flex: 1,
+        marginLeft: 10,
+        fontSize: 16,
+    },
+    searchIconContainer: {
         height: 30,
-        borderRadius: 8,
-        marginHorizontal: 5,
+        width: 30,
+        borderRadius: 15,
+        backgroundColor: '#2ECC71', // Or any color you want for the background
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    colorOptionSelected: {
-        borderWidth: 2,
-        borderColor: 'black', 
-    }
+    searchIcon: {
+        color: 'white',
+    },
 }); 
 
 export default styles;

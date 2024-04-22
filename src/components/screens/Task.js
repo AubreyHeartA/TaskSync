@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { Feather } from "@expo/vector-icons";
 import styles from "../../config/TaskStyles";
 import TaskModal from "../forms/TaskModal";
 import TaskList from "../forms/TaskList";
@@ -25,7 +26,7 @@ const Task = ({ route }) => {
   const [filteredTasks, setFilteredTasks] = useState([]); 
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newCategory, setNewCategory] = useState("");
-
+  const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -177,6 +178,22 @@ const Task = ({ route }) => {
     }
   };
 
+  const renderSearchBar = () => {
+    return (
+      <View style={styles.searchBarContainer}>
+        <View style={styles.searchIconContainer}>
+          <Feather name="search" size={20} style={styles.searchIcon} />
+        </View>
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search task here"
+          value={searchQuery}
+          onChangeText={text => setSearchQuery(text)}
+        />
+      </View>
+    );
+  };
+
   const renderCategories = () => {
     return (
       <ScrollView horizontal style={styles.categoryList}>
@@ -215,8 +232,11 @@ const Task = ({ route }) => {
     );
   };
 
+  
+
   return (
     <View style={styles.container}>
+      {renderSearchBar()}
       {renderCategories()}
       {renderTaskList(filteredTasks)}
   
