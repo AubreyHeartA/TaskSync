@@ -7,27 +7,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 
 import Navigation from './src/components/navigation/Navigation';
-// import LoginScreen from './src/components/forms/LoginScreen';
+import Login from './src/components/forms/Login';
+import Register from './src/components/forms/Register';
+
 export default function App() {
-
-//   const [showLandingPage, setShowLandingPage] = useState(true);
-
-//   const handleStart = () => {
-//     setShowLandingPage(false);
-//   };
 
   return (
     <PaperProvider>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaView style={styles.container}>
           <StatusBar style="auto" />
-
           <NavigationContainer>
-            {/* {showLandingPage ? (
-              <LoginScreen onStart={handleStart} />
-            ) : (
-              <Navigation />
-            )} */}
             <Navigation />
           </NavigationContainer>
         </SafeAreaView>
@@ -36,7 +26,7 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
     flex: 1
   },

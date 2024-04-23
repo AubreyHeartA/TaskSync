@@ -84,7 +84,7 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                             onChange={handleCategoryChange}
                             style={styles.modalSelector}
                         />
-                    </View>
+                    </View> 
 
                     {selectedCategory && (
                         <TouchableOpacity

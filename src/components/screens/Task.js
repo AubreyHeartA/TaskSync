@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground, Alert } from "react-native";
+import axios from 'axios'; // Import axios if you haven't already
+
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from "@expo/vector-icons";
 import styles from "../../config/TaskStyles";
@@ -49,77 +51,176 @@ const Task = ({ route }) => {
     setValidationError(false);
   };
 
-  const handleAddCategory = () => {
-    if (newCategory.trim() !== "") {
-      if (!categories.includes(newCategory)) {
-        setCategories([...categories, newCategory]);
-        setTask({ ...task, category: newCategory });
-        setNewCategory("");
-        setModalVisible(true);
-      } else {
-        alert("Category already exists!");
-      }
-    }
-  };
+//   const handleAddCategory = () => {
+//     if (newCategory.trim() !== "") {
+//       if (!categories.includes(newCategory)) {
+//         setCategories([...categories, newCategory]);
+//         setTask({ ...task, category: newCategory });
+//         setNewCategory("");
+//         setModalVisible(true);
+//       } else {
+//         alert("Category already exists!");
+//       }
+//     }
+//   };
 
-  const handleAddTaskAndCategory = () => {
-    if (
-      task.title.trim() !== "" &&
-      (task.category.trim() !== "" || newCategory.trim() !== "")
-    ) {
-      const currentDate = new Date();
-      const formattedDate = currentDate.toLocaleString();
-  
-      const updatedTask = {
-        id: editingTask ? editingTask.id : Date.now(),
-        ...task,
-        createdAt: formattedDate,
-        category: task.category || newCategory,
-      };
-  
-      if (editingTask) {
-        const updatedTasks = tasks.map((t) =>
-          t.id === editingTask.id ? updatedTask : t
-        );
-        setTasks(updatedTasks);
-  
-        if (
-          selectedCategory === "All" ||
-          selectedCategory === updatedTask.category
-        ) {
-          const updatedFilteredTasks = filteredTasks.map((t) =>
-            t.id === editingTask.id ? updatedTask : t
-          );
-          setFilteredTasks(updatedFilteredTasks);
-        }
-      } else {
-        setTasks((prevTasks) => [...prevTasks, updatedTask]);
-  
-        if (
-          selectedCategory === "All" ||
-          selectedCategory === updatedTask.category
-        ) {
-          setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
-        }
-      }
-  
-      setTask({
-        title: "",
-        description: "",
-        status: "Pending",
-        deadline: "",
-        createdAt: "",
-        category: "",
-      });
-      setModalVisible(false);
-      setValidationError(false);
-      navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
-    } else {
-      setValidationError(true);
-    }
-  };
-  
 
+    const handleAddCategory = async () => {
+        if (newCategory.trim() !== "") {
+            if (!categories.includes(newCategory)) {
+                try {
+                    // Make HTTP POST request to the API endpoint
+                    const response = await axios.post('http:/192.168.1.26:3000/category', { categoryName: newCategory });
+                    
+                    // Check if the request was successful (status code 201)
+                    if (response.status === 201) {
+                    // Add the new category to the local state
+                    setCategories([...categories, newCategory]);
+                    
+                    // Optionally, update the task state with the new category
+                    setTask({ ...task, category: newCategory });
+                    
+                    // Clear the input for a new category
+                    setNewCategory("");
+                    
+                    // Set modal visibility
+                    setModalVisible(true);
+                    } else {
+                    // Handle other status codes if necessary
+                    console.log("Unexpected status code:", response.status);
+                    }
+                } catch (error) {
+                    // Handle any errors that occur during the request
+                    console.error("Error adding category:", error);
+                    // Optionally, display an error message to the user
+                    alert("Failed to add category. Please try again later.");
+                }
+            } else {
+                alert("Category already exists!");
+            }
+        }
+        };
+
+
+    // const handleAddTaskAndCategory = () => {
+    //     if (
+    //     task.title.trim() !== "" &&
+    //     (task.category.trim() !== "" || newCategory.trim() !== "")
+    //     ) {
+    //     const currentDate = new Date();
+    //     const formattedDate = currentDate.toLocaleString();
+    
+    //     const updatedTask = {
+    //         id: editingTask ? editingTask.id : Date.now(),
+    //         ...task,
+    //         createdAt: formattedDate,
+    //         category: task.category || newCategory,
+    //     };
+    
+    //     if (editingTask) {
+    //         const updatedTasks = tasks.map((t) =>
+    //         t.id === editingTask.id ? updatedTask : t
+    //         );
+    //         setTasks(updatedTasks);
+    
+    //         if (
+    //         selectedCategory === "All" ||
+    //         selectedCategory === updatedTask.category
+    //         ) {
+    //         const updatedFilteredTasks = filteredTasks.map((t) =>
+    //             t.id === editingTask.id ? updatedTask : t
+    //         );
+    //         setFilteredTasks(updatedFilteredTasks);
+    //         }
+    //     } else {
+    //         setTasks((prevTasks) => [...prevTasks, updatedTask]);
+    
+    //         if (
+    //         selectedCategory === "All" ||
+    //         selectedCategory === updatedTask.category
+    //         ) {
+    //         setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
+    //         }
+    //     }
+    
+    //     setTask({
+    //         title: "",
+    //         description: "",
+    //         status: "Pending",
+    //         deadline: "",
+    //         createdAt: "",
+    //         category: "",
+    //     });
+    //     setModalVisible(false);
+    //     setValidationError(false);
+    //     navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
+    //     } else {
+    //     setValidationError(true);
+    //     }
+    // };
+
+    const handleAddTaskAndCategory = async () => {
+        try {
+            const response = await fetch('http://192.168.1.26:3000/personaltask', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(task),
+                
+            });
+        
+            if (!response.ok) {
+                throw new Error('Failed to add task');
+            }
+            const currentDate = new Date();
+            const formattedDate = currentDate.toLocaleString();
+            
+            const updatedTask = {
+                id: editingTask ? editingTask.id : Date.now(),
+                ...task,
+                createdAt: formattedDate,
+                category: task.category || newCategory,
+            };
+            if (editingTask) {
+                const updatedTasks = tasks.map((t) =>
+                t.id === editingTask.id ? updatedTask : t
+                );
+                setTasks(updatedTasks);
+        
+                if (
+                selectedCategory === "All" ||
+                selectedCategory === updatedTask.category
+                ) {               const updatedFilteredTasks = filteredTasks.map((t) =>
+                    t.id === editingTask.id ? updatedTask : t
+                );
+                setFilteredTasks(updatedFilteredTasks);
+                }
+            } else {
+                setTasks((prevTasks) => [...prevTasks, updatedTask]);
+        
+                if (
+                selectedCategory === "All" ||
+                selectedCategory === updatedTask.category
+                ) {
+                setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
+                }
+            }
+
+            const data = await response.json();
+            // Handle success, e.g., show success message
+            Alert.alert('Success', 'Task added successfully');
+            setModalVisible(false);
+            setValidationError(false);
+            navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
+
+        } catch (error) {
+            console.error('Error adding task:', error);
+            // Handle error, e.g., show error message
+            Alert.alert('Error', 'Failed to add task');
+        }
+    };
+  
   const handleEditTask = (task) => { 
     setTask((prevTask) => {
       const updatedTask = { ...prevTask };

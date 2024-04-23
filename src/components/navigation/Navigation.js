@@ -6,6 +6,8 @@ import Home from './../screens/Home';
 import Task from './../screens/Task';
 import Team from './../screens/Team';
 import Profile from './../screens/Profile';
+// import Register from '../forms/Register';
+// import Login from '../forms/Login';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +36,8 @@ export default function Navigation() {
 //     // Add your logic to check the user's login state
 //     // Example: AsyncStorage.getItem("isLoggedIn").then(value => setIsLoggedIn(!!value));
 //   }, []);
+
+
 
   return (
     <Tab.Navigator

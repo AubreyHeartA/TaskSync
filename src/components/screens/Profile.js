@@ -18,9 +18,12 @@ import globalstyles from "../../config/styles";
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const [firstName, setFirstName] = useState("Firstname");
-    const [lastName, setlastName] = useState("lastname");
-    const [workEmail, setWorkEmail] = useState("set email");
+    // const [userId, setUserId] = useState("userID");
+    // const [firstName, setFirstName] = useState("Firstname");
+    // const [lastName, setlastName] = useState("lastname");
+    // const [workEmail, setWorkEmail] = useState("set email");
+    // const [workEmail, setWorkEmail] = useState("set email");
+    const [username, setUsername] = useState('');
 
     // this is just a test -- this is originally to fetch data an update it
     // this function posts an info to the db
@@ -57,6 +60,7 @@ export default function Profile() {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+            
               firstName,
               lastName,
               workEmail,
@@ -95,14 +99,21 @@ export default function Profile() {
         <Divider />
         <View style={{ padding: 20 }}>
             <Text>Account Information:</Text>
+
             <View style={styles.displayInfo}>
+                <Text style={styles.label}>username</Text>
+                <Text>{username}</Text>
+            </View>
+
+            {/* <View style={styles.displayInfo}>
                 <Text style={styles.label}>Name</Text>
                 <Text>{firstName} {lastName}</Text>
-            </View>
-            <View style={styles.displayInfo}>
+            </View> */}
+
+            {/* <View style={styles.displayInfo}>
                 <Text style={styles.label}>Work Email</Text>
                 <Text>{workEmail}</Text>
-            </View>
+            </View> */}
 
             <TouchableOpacity style={styles.updateButton} onPress={() => setModalVisible(true)} >
                 <Text style={styles.textButton}>Edit Profile</Text>
@@ -112,8 +123,7 @@ export default function Profile() {
         <Divider style={{ marginTop: 10 }} />
         <View style={styles.actionsContainer}>
             <Text>Actions</Text>
-            {/* Repeat the block below for each action */}
-
+                        
             <TouchableOpacity style={styles.actions}>
                 <Icon source="help-circle-outline" size={24} color="black" />
                 <Text style={styles.actionsItem}>Help and Support</Text>
@@ -150,6 +160,14 @@ export default function Profile() {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 80 }}>Edit Profile</Text>
+                    <View style={styles.information}>
+                        <Text>First Name</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            placeholder="Juan"
+                            onChangeText={text => setFirstName(text)}
+                        />
+                    </View>
                     <View style={styles.information}>
                         <Text>First Name</Text>
                         <TextInput
