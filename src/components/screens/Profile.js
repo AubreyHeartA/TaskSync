@@ -18,12 +18,9 @@ import globalstyles from "../../config/styles";
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
 
-    // const [userId, setUserId] = useState("userID");
-    // const [firstName, setFirstName] = useState("Firstname");
-    // const [lastName, setlastName] = useState("lastname");
-    // const [workEmail, setWorkEmail] = useState("set email");
-    // const [workEmail, setWorkEmail] = useState("set email");
-    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState("Firstname");
+    const [lastName, setlastName] = useState("lastname");
+    const [workEmail, setWorkEmail] = useState("set email");
 
     // this is just a test -- this is originally to fetch data an update it
     // this function posts an info to the db
@@ -105,15 +102,15 @@ export default function Profile() {
                 <Text>{username}</Text>
             </View>
 
-            {/* <View style={styles.displayInfo}>
+            <View style={styles.displayInfo}>
                 <Text style={styles.label}>Name</Text>
                 <Text>{firstName} {lastName}</Text>
-            </View> */}
+            </View>
 
-            {/* <View style={styles.displayInfo}>
+            <View style={styles.displayInfo}>
                 <Text style={styles.label}>Work Email</Text>
                 <Text>{workEmail}</Text>
-            </View> */}
+            </View>
 
             <TouchableOpacity style={styles.updateButton} onPress={() => setModalVisible(true)} >
                 <Text style={styles.textButton}>Edit Profile</Text>
