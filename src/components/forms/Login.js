@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
 const LoginScreen = () => {
-  const [username, setUsernmae] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -26,7 +26,7 @@ const LoginScreen = () => {
         style={styles.input}
         placeholder="Username"
         value={username}
-        onChangeText={setUsernmae}
+        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}

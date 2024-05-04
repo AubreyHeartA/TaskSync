@@ -18,9 +18,9 @@ import globalstyles from "../../config/styles";
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const [firstName, setFirstName] = useState("Firstname");
-    const [lastName, setLastName] = useState("lastname");
-    const [workEmail, setWorkEmail] = useState("set email");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [workEmail, setWorkEmail] = useState("");
 
     // this is just a test -- this is originally to fetch data an update it
     // this function posts an info to the db
@@ -102,7 +102,7 @@ export default function Profile() {
                 </View>
 
                 <View style={styles.displayInfo}>
-                    <Text style={styles.label}>Work Email</Text>
+                    <Text style={styles.label}>Email</Text>
                     <Text>{workEmail}</Text>
                 </View>
 
@@ -171,7 +171,7 @@ export default function Profile() {
                             />
                         </View>
                         <View style={styles.information}>
-                            <Text>Work Email</Text>
+                            <Text>Email</Text>
                             <TextInput
                                 style={styles.textInput}
                                 placeholder="Enter a valid email"
