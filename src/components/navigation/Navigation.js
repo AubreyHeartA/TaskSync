@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Home from './../screens/Home';
 import Task from './../screens/Task';
-import Team from './../screens/Team';
 import Profile from './../screens/Profile';
 // import Register from '../forms/Register';
 // import Login from '../forms/Login';
@@ -19,10 +18,6 @@ const customIcons = {
   Task: {
     active: require('../../../assets/task-active.png'),
     inactive: require('../../../assets/task-inactive.png')
-  },
-  Team: {
-    active: require('../../../assets/team-active.png'),
-    inactive: require('../../../assets/team-inactive.png')
   },
   Profile: {
     active: require('../../../assets/profile-active.png'),
@@ -72,9 +67,6 @@ export default function Navigation() {
       }} />
       <Tab.Screen name="Task" component={Task} options={{
         tabBarLabel: 'Tasks',
-      }} />
-      <Tab.Screen name="Team" component={Team} options={{
-        tabBarLabel: 'Team',
       }} />
       <Tab.Screen name="Profile" component={Profile} options={{
         tabBarLabel: 'Profile',

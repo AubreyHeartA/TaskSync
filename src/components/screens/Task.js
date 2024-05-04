@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground, Alert } from "react-native";
-import axios from 'axios'; // Import axios if you haven't already
+import axios from 'axios'; 
 
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from "@expo/vector-icons";
@@ -70,7 +70,7 @@ const Task = ({ route }) => {
             if (!categories.includes(newCategory)) {
                 try {
                     // Make HTTP POST request to the API endpoint
-                    const response = await axios.post('http:/192.168.1.26:3000/category', { categoryName: newCategory });
+                    const response = await axios.post('http://192.168.72.128:3000/category', { categoryName: newCategory });
                     
                     // Check if the request was successful (status code 201)
                     if (response.status === 201) {
@@ -161,7 +161,7 @@ const Task = ({ route }) => {
 
     const handleAddTaskAndCategory = async () => {
         try {
-            const response = await fetch('http://192.168.1.26:3000/personaltask', {
+            const response = await fetch('http://192.168.72.128:3000/tasks', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'

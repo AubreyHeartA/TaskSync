@@ -4,7 +4,6 @@ import styles from "../../config/TaskStyles";
 import ModalSelector from 'react-native-modal-selector';
 import DatePicker from "react-native-modern-datepicker"; 
 import { Feather } from "@expo/vector-icons";
-import SegmentedControl from '@react-native-community/segmented-control';
 
 const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError, categories, setNewCategory, newCategory, handleAddCategory, handleAddTaskAndCategory, handleDeleteCategory}) => { 
     const [selectedCategory, setSelectedCategory] = useState(task.category || ""); 
@@ -42,18 +41,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                     <Text style={{ marginLeft: 10, fontSize: 20, fontWeight: 'bold' }}>New Task</Text>
                 </View>
 
-                <SegmentedControl
-                    values={['Individual', 'Team']}
-                    selectedIndex={taskType === 'Individual' ? 0 : 1}
-                    onChange={(event) => {
-                        const newIndex = event.nativeEvent.selectedSegmentIndex;
-                        setTaskType(event.nativeEvent.selectedSegmentIndex === 0 ? 'Individual' : 'Team');
-                    }}
-                    style={styles.segmentedControl}
-                    fontStyle={styles.segmentedControlText}
-                    activeFontStyle={{color: '#fff'}}
-                    tintColor="#2ECC71"
-                />
 
                 <Text style={styles.inputLabel}>Title:</Text>
                 <TextInput 
@@ -146,22 +133,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
                     selected={task.deadline} 
                     onDateChange={(date) => setTask({ ...task, deadline: date }) }
                 /> 
-
-                {taskType === 'Team' && (
-                    <View>
-                        <Text style={styles.inputLabel}>Add Member:</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter member's name or email"
-                            value={newMember}
-                            onChangeText={(text) => setNewMember(text)}
-                        />
-                        <TouchableOpacity onPress={handleAddMember} style={styles.button}>
-                            <Text style={styles.buttonText}>Add Member</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
-
 
                 {validationError && ( 
                     <Text style={styles.errorText}> Please fill in all fields correctly. </Text> 
