@@ -5,11 +5,8 @@ import ModalSelector from 'react-native-modal-selector';
 import DatePicker from "react-native-modern-datepicker"; 
 import { Feather } from "@expo/vector-icons";
 
-const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError, categories, setNewCategory, newCategory, handleAddCategory, handleAddTaskAndCategory, handleDeleteCategory}) => { 
-    const [selectedCategory, setSelectedCategory] = useState(task.category || ""); 
-    const [taskType, setTaskType] = useState("Individual");
-    const [newMember, setNewMember] = useState('');
-    const [members, setMembers] = useState([]);
+const TaskModal = ({ modalVisible, task = { title: '', description: '', category: '', priority: 'Low', deadline: '', id: null }, setTask, handleCancel, validationError = '', categories = [], setNewCategory, newCategory = '', handleAddCategory, handleAddTaskAndCategory, handleDeleteCategory}) => { 
+    const [selectedCategory, setSelectedCategory] = useState(task.category); 
 
     const handleCategoryChange = (option) => {
         setSelectedCategory(option.value);
@@ -20,13 +17,6 @@ const TaskModal = ({ modalVisible, task, setTask, handleCancel, validationError,
         setNewCategory("");
         setSelectedCategory("");
         handleDeleteCategory(selectedCategory);
-    };
-
-    const handleAddMember = () => {
-        if (newMember.trim()) {
-            setMembers([...members, newMember]);
-            setNewMember(''); 
-        }
     };
 
     return ( 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, ScrollView, TextInput, ImageBackground, Alert } from "react-native";
-import axios from 'axios'; 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from "@expo/vector-icons";
 import styles from "../../config/TaskStyles";
@@ -29,13 +28,54 @@ const Task = ({ route }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [newCategory, setNewCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTasksCount, setActiveTasksCount] = useState(0);
+  const [completedTasksCount, setCompletedTasksCount] = useState(0);
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (route.params?.updatedTasks) {
-      setTasks(route.params.updatedTasks);
-    }
-  }, [route.params?.updatedTasks]);
+    const loadData = async () => {
+      try {
+        const savedTasks = await AsyncStorage.getItem('tasks');
+        const savedCategories = await AsyncStorage.getItem('categories');
+
+        if (savedTasks) {
+          setTasks(JSON.parse(savedTasks));
+          setFilteredTasks(JSON.parse(savedTasks));
+        }
+
+        if (savedCategories) {
+          setCategories(JSON.parse(savedCategories));
+        }
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    };
+
+    loadData();
+  }, []);
+
+// After loading tasks, update the counts
+  useEffect(() => {
+    const active= tasks.filter(t => t.status === "Pending").length;
+    const completed = tasks.filter(t => t.status === "Completed").length;
+    setActiveTasksCount(active);
+    setCompletedTasksCount(completed);
+  }, [tasks]);
+
+  // Save tasks and categories to AsyncStorage whenever they change
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+        await AsyncStorage.setItem('categories', JSON.stringify(categories));
+      } catch (error) {
+        console.error('Error saving data:', error);
+      }
+    };
+
+    saveData();
+  }, [tasks, categories]);
+
 
   const handleAddTask = () => {
     setEditingTask(null);
@@ -51,175 +91,78 @@ const Task = ({ route }) => {
     setValidationError(false);
   };
 
-//   const handleAddCategory = () => {
-//     if (newCategory.trim() !== "") {
-//       if (!categories.includes(newCategory)) {
-//         setCategories([...categories, newCategory]);
-//         setTask({ ...task, category: newCategory });
-//         setNewCategory("");
-//         setModalVisible(true);
-//       } else {
-//         alert("Category already exists!");
-//       }
-//     }
-//   };
+  const handleAddCategory = () => {
+    if (newCategory.trim() !== "") {
+      if (!categories.includes(newCategory)) {
+        setCategories([...categories, newCategory]);
+        setTask({ ...task, category: newCategory });
+        setNewCategory("");
+        setModalVisible(true);
+      } else {
+        alert("Category already exists!");
+      }
+    }
+  };
 
-
-    const handleAddCategory = async () => {
-        if (newCategory.trim() !== "") {
-            if (!categories.includes(newCategory)) {
-                try {
-                    // Make HTTP POST request to the API endpoint
-                    const response = await axios.post('http://192.168.72.128:3000/category', { categoryName: newCategory });
-                    
-                    // Check if the request was successful (status code 201)
-                    if (response.status === 201) {
-                    // Add the new category to the local state
-                    setCategories([...categories, newCategory]);
-                    
-                    // Optionally, update the task state with the new category
-                    setTask({ ...task, category: newCategory });
-                    
-                    // Clear the input for a new category
-                    setNewCategory("");
-                    
-                    // Set modal visibility
-                    setModalVisible(true);
-                    } else {
-                    // Handle other status codes if necessary
-                    console.log("Unexpected status code:", response.status);
-                    }
-                } catch (error) {
-                    // Handle any errors that occur during the request
-                    console.error("Error adding category:", error);
-                    // Optionally, display an error message to the user
-                    alert("Failed to add category. Please try again later.");
-                }
-            } else {
-                alert("Category already exists!");
-            }
+  
+  const handleAddTaskAndCategory = () => {
+    if (
+      task.title.trim() !== "" &&
+      (task.category.trim() !== "" || newCategory.trim() !== "")
+    ) {
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleString();
+  
+      const updatedTask = {
+        id: editingTask ? editingTask.id : Date.now(),
+        ...task,
+        createdAt: formattedDate,
+        category: task.category || newCategory,
+      };
+  
+      if (editingTask) {
+        const updatedTasks = tasks.map((t) =>
+          t.id === editingTask.id ? updatedTask : t
+        );
+        setTasks(updatedTasks);
+  
+        if (
+          selectedCategory === "All" ||
+          selectedCategory === updatedTask.category
+        ) {
+          const updatedFilteredTasks = filteredTasks.map((t) =>
+            t.id === editingTask.id ? updatedTask : t
+          );
+          setFilteredTasks(updatedFilteredTasks);
         }
-        };
-
-
-    // const handleAddTaskAndCategory = () => {
-    //     if (
-    //     task.title.trim() !== "" &&
-    //     (task.category.trim() !== "" || newCategory.trim() !== "")
-    //     ) {
-    //     const currentDate = new Date();
-    //     const formattedDate = currentDate.toLocaleString();
-    
-    //     const updatedTask = {
-    //         id: editingTask ? editingTask.id : Date.now(),
-    //         ...task,
-    //         createdAt: formattedDate,
-    //         category: task.category || newCategory,
-    //     };
-    
-    //     if (editingTask) {
-    //         const updatedTasks = tasks.map((t) =>
-    //         t.id === editingTask.id ? updatedTask : t
-    //         );
-    //         setTasks(updatedTasks);
-    
-    //         if (
-    //         selectedCategory === "All" ||
-    //         selectedCategory === updatedTask.category
-    //         ) {
-    //         const updatedFilteredTasks = filteredTasks.map((t) =>
-    //             t.id === editingTask.id ? updatedTask : t
-    //         );
-    //         setFilteredTasks(updatedFilteredTasks);
-    //         }
-    //     } else {
-    //         setTasks((prevTasks) => [...prevTasks, updatedTask]);
-    
-    //         if (
-    //         selectedCategory === "All" ||
-    //         selectedCategory === updatedTask.category
-    //         ) {
-    //         setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
-    //         }
-    //     }
-    
-    //     setTask({
-    //         title: "",
-    //         description: "",
-    //         status: "Pending",
-    //         deadline: "",
-    //         createdAt: "",
-    //         category: "",
-    //     });
-    //     setModalVisible(false);
-    //     setValidationError(false);
-    //     navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
-    //     } else {
-    //     setValidationError(true);
-    //     }
-    // };
-
-    const handleAddTaskAndCategory = async () => {
-        try {
-            const response = await fetch('http://192.168.72.128:3000/tasks', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(task),
-                
-            });
-        
-            if (!response.ok) {
-                throw new Error('Failed to add task');
-            }
-            const currentDate = new Date();
-            const formattedDate = currentDate.toLocaleString();
-            
-            const updatedTask = {
-                id: editingTask ? editingTask.id : Date.now(),
-                ...task,
-                createdAt: formattedDate,
-                category: task.category || newCategory,
-            };
-            if (editingTask) {
-                const updatedTasks = tasks.map((t) =>
-                t.id === editingTask.id ? updatedTask : t
-                );
-                setTasks(updatedTasks);
-        
-                if (
-                selectedCategory === "All" ||
-                selectedCategory === updatedTask.category
-                ) {               const updatedFilteredTasks = filteredTasks.map((t) =>
-                    t.id === editingTask.id ? updatedTask : t
-                );
-                setFilteredTasks(updatedFilteredTasks);
-                }
-            } else {
-                setTasks((prevTasks) => [...prevTasks, updatedTask]);
-        
-                if (
-                selectedCategory === "All" ||
-                selectedCategory === updatedTask.category
-                ) {
-                setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
-                }
-            }
-
-            const data = await response.json();
-            // Handle success, e.g., show success message
-            Alert.alert('Success', 'Task added successfully');
-            setModalVisible(false);
-            setValidationError(false);
-            navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
-
-        } catch (error) {
-            console.error('Error adding task:', error);
-            // Handle error, e.g., show error message
-            Alert.alert('Error', 'Failed to add task');
+      } else {
+        setTasks((prevTasks) => [...prevTasks, updatedTask]);
+  
+        if (
+          selectedCategory === "All" ||
+          selectedCategory === updatedTask.category
+        ) {
+          setFilteredTasks((prevFilteredTasks) => [...prevFilteredTasks, updatedTask]);
         }
-    };
+      }
+  
+      setTask({
+        title: "",
+        description: "",
+        status: "Pending",
+        createdAt: "",
+        category: "",
+      });
+      setModalVisible(false);
+      setValidationError(false);
+  
+      // Update the navigation to 'Profile' screen
+      navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
+    } else {
+      setValidationError(true);
+    }
+    saveData();
+  };
   
   const handleEditTask = (task) => { 
     setTask((prevTask) => {
@@ -265,6 +208,13 @@ const Task = ({ route }) => {
     setSelectedCategory(selectedCategory);
   };
 
+  const handleFilterByTitle = (title) => {
+    const filteredTasks = tasks.filter((t) =>
+      t.title.toLowerCase().includes(title.toLowerCase())
+    );
+    setFilteredTasks(filteredTasks);
+  };
+
   const handleDeleteCategory = (category) => {
     const updatedTasks = tasks.filter((t) => t.category !== category);
     setTasks(updatedTasks);
@@ -276,6 +226,16 @@ const Task = ({ route }) => {
       handleFilterByCategory("All");
     } else {
       setFilteredTasks(tasks.filter((t) => t.category.toLowerCase() === selectedCategory.toLowerCase()));
+    }
+    saveData();
+  };
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+      await AsyncStorage.setItem('categories', JSON.stringify(categories));
+    } catch (error) {
+      console.error('Error saving data to AsyncStorage:', error);
     }
   };
 
@@ -333,7 +293,9 @@ const Task = ({ route }) => {
     );
   };
 
-  
+  useEffect(() => {
+    handleFilterByTitle(searchQuery);
+  }, [searchQuery]);
 
   return (
     <View style={styles.container}>
@@ -379,4 +341,3 @@ const Task = ({ route }) => {
 };
 
 export default Task;
-

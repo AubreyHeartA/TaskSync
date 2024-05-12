@@ -327,7 +327,6 @@ const styles = StyleSheet.create({
     priorityContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginBottom: 20,
     },
     priorityButton: {
         borderWidth: 1,
@@ -437,6 +436,17 @@ const styles = StyleSheet.create({
     },
     searchIcon: {
         color: 'white',
+    },
+    activeSectionHeader: {
+        backgroundColor: "#f7f7f7",
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ccc",
+    },
+    activeSectionHeaderText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#333",
     },
 }); 
 

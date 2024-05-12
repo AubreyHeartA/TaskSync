@@ -1,72 +1,99 @@
 import React, { useState, useEffect } from "react";
-import {
-    SafeAreaView,
-    ScrollView,
-    View,
-    Text,
-    TextInput,
-    Image,
-    TouchableOpacity,
-    StyleSheet,
-    Modal,
-} from "react-native";
+import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Modal, Alert } from "react-native";
 import { Icon, Button, Divider, List } from "react-native-paper";
-import * as Linking from "expo-linking";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Linking } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import globalstyles from "../../config/styles";
 
 export default function Profile() {
     const [modalVisible, setModalVisible] = useState(false);
-
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [workEmail, setWorkEmail] = useState("");
+    const [profilePhoto, setProfilePhoto] = useState(null);
 
-    // this is just a test -- this is originally to fetch data an update it
-    // this function posts an info to the db
-    // http://192.168.16.102:3000/api/profile 
-    // http://192.168.1.26:3000/profile
+    useEffect(() => {
+        // Load user data from AsyncStorage
+        loadUserData();
+    }, []);
 
-    
-    // const saveChanges = async () => {
-    //     try {
-    //         const response = await fetch('http://192.168.1.26:3000/api/profile', {  // Replace <express-server-ip> with your server's IP and port
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({
-    //                 firstName: firstName,
-    //                 lastName: lastName,
-    //                 workEmail: workEmail,
-    //             }),
-    //         });
-    //         const json = await response.json();
-    //         console.log('Profile Update Response:', json);
-    //         setModalVisible(false);
-    //     } catch (error) {
-    //         console.error('Error updating profile:', error);
-    //     }
-    // };
+    const loadUserData = async () => {
+        try {
+            const firstNameValue = await AsyncStorage.getItem('firstName');
+            const lastNameValue = await AsyncStorage.getItem('lastName');
+            const workEmailValue = await AsyncStorage.getItem('workEmail');
+            const profilePhotoUri = await AsyncStorage.getItem('profilePhoto');
+
+            if (firstNameValue !== null) {
+                setFirstName(firstNameValue);
+            }
+            if (lastNameValue !== null) {
+                setLastName(lastNameValue);
+            }
+            if (workEmailValue !== null) {
+                setWorkEmail(workEmailValue);
+            }
+            if (profilePhotoUri !== null) {
+                setProfilePhoto(profilePhotoUri);
+            }
+        } catch (e) {
+            console.error('Error loading user data:', e);
+        }
+    };
 
     const saveChanges = async () => {
         try {
-            const response = await fetch('http://192.168.72.128:3000/profile', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    firstName,
-                    lastName,
-                    workEmail,
-                }),
-            });
-            const data = await response.json();
-            console.log('Profile Update Response:', data);
+            // Save user data to AsyncStorage
+            await AsyncStorage.setItem('firstName', firstName);
+            await AsyncStorage.setItem('lastName', lastName);
+            await AsyncStorage.setItem('workEmail', workEmail);
+            await AsyncStorage.setItem('profilePhoto', profilePhoto || '');
+
+            Alert.alert('Profile Updated', 'Your profile has been successfully updated.');
+
             setModalVisible(false);
         } catch (error) {
             console.error('Error updating profile:', error);
+        }
+    };
+
+    const selectProfilePhoto = async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            Alert.alert('Permission Denied', 'You need to grant permission to access the photo library.');
+            return;
+        }
+    
+        try {
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1, 1],
+                quality: 1,
+            });
+    
+            console.log('ImagePicker result:', result);
+    
+            if (result.cancelled || !result.uri) {
+                return;
+            }
+
+            const profilePhotoUri = `${FileSystem.documentDirectory}profilePhoto.jpg`;
+            await FileSystem.copyAsync({
+                from: result.uri,
+                to: profilePhotoUri,
+            });
+    
+            // Update the profile photo state with the URI of the selected image
+            setProfilePhoto(profilePhotoUri);
+    
+            // You can also save the image to AsyncStorage here if needed
+            Alert.alert('Profile Photo Updated', 'Your profile photo has been successfully updated.');
+        } catch (error) {
+            console.error('Error selecting image:', error);
+            Alert.alert('Error', 'There was an error selecting the profile photo.');
         }
     };
 
@@ -76,8 +103,8 @@ export default function Profile() {
     };
 
     const reportIssue = () => {
-    Linking.openURL("mailto:studymate.project101@gmail.com")
-        .catch((err) => console.error('An error occurred', err));
+        Linking.openURL("mailto:studymate.project101@gmail.com")
+            .catch((err) => console.error('An error occurred', err));
     };
 
     return (
@@ -88,7 +115,13 @@ export default function Profile() {
         >
             <Text style={styles.profileHeader}>Profile</Text>
             <View style={styles.profileContainer}>
-                <Icon source="account-circle" size={200} />
+                <TouchableOpacity onPress={selectProfilePhoto}>
+                    {profilePhoto ? (
+                        <Image key={profilePhoto} source={{ uri: profilePhoto }} style={{ width: 200, height: 200, borderRadius: 100 }} />
+                    ) : (
+                        <Icon source="account-circle" size={200} />
+                    )}
+                </TouchableOpacity>
                 <Text style={styles.greetings}>Hello, {firstName} {lastName}!</Text>
             </View>
 

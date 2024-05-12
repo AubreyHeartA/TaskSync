@@ -67,8 +67,8 @@ const TaskItem = ({ task, handleEditTask, handleToggleCompletion, handleDeleteTa
               <Text style={styles.priorityText}>{task.priority}</Text>
             </View>
           </View>
-          <Text style={styles.taskText}>{task.title}</Text>
-          <Text style={styles.taskDescription}>{task.description}</Text>
+          <Text style={[styles.taskText, task.status === "Completed" && styles.completedTaskText]}>{task.title}</Text>
+          <Text style={[styles.taskDescription, task.status === "Completed" && styles.completedTaskText]}>{task.description}</Text>
           <Text style={styles.taskStatus}>Status: {task.status}</Text>
           <Text style={styles.taskDeadline}>Deadline: {task.deadline}</Text>
           <Text style={styles.taskCreatedAt}>Created: {task.createdAt}</Text>
