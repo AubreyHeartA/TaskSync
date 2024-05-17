@@ -156,7 +156,6 @@ const Task = ({ route }) => {
       setModalVisible(false);
       setValidationError(false);
   
-      // Update the navigation to 'Profile' screen
       navigation.navigate('Task', { updatedTasks: [...tasks, updatedTask] });
     } else {
       setValidationError(true);

@@ -6,55 +6,79 @@ const globalstyles = {
         backgroundColor: '#fff',
     },
     header: {
+        marginBottom: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-        
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
     },
     logo: {
         width: 150,
         height: 30,
+        resizeMode: 'contain'
     },
     welcome: {
-        padding: 30,
-        fontSize: 20,
-        fontWeight: '500',
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#333', // Darker text for better readability
+        marginVertical: 20,
     },
     countContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-around',
+        marginBottom: 20,
     },
-    ongoingTask: {
+    activeTask: {
         alignItems: 'center',
-        backgroundColor: '#D7A990',
+        backgroundColor: '#34C759', // Green background for active tasks
         padding: 20,
-        // paddingVertical: 20,
-        // paddingHorizontal: 20,
-        borderRadius: 10
+        borderRadius: 10,
     },
     completedTask: {
         alignItems: 'center',
-        backgroundColor: '#29CD66',
+        backgroundColor: '#FF9500', // Orange background for completed tasks
         padding: 20,
-        borderRadius: 10
+        borderRadius: 10,
     },
     count: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 20,
-        marginBottom: 5
+        backgroundColor: '#5ccb51',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
     },
     counting: {
         color: '#fff',
         fontSize: 18,
-        fontWeight: '800',
+        fontWeight: 'bold',
     },
     taskText: {
         color: '#fff',
         fontSize: 17,
-        fontWeight: '600',
     },
-    // Profile.js
+    taskText: {
+        marginTop: 5,
+        color: '#333',
+    },
+    sectionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333', // Dark text for section titles
+        marginBottom: 10,
+    },
+    taskCard: {
+        backgroundColor: '#ffffff', // White background for task cards
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    
+// Profile.js
 
     profileHeader: {
         textAlign: 'center',
@@ -88,12 +112,13 @@ const globalstyles = {
     },
     actionsContainer: {
         // marginTop: 10,
-        padding: 20
+        padding: 20,
+        marginBottom: 60,
     },
     actions: {
         flexDirection: 'row', 
         alignItems: 'center',
-        padding: 10
+        padding: 10,
     },
     actionsItem: {
         marginLeft: 10,
@@ -127,7 +152,44 @@ const globalstyles = {
         color: '#fff',
         textAlign: 'center',
         fontWeight: '700',
-    }
+    },
+    container: {
+        flex: 1,
+        padding: 20,
+    },
+    header: {
+        marginBottom: 10,
+    },
+    logo: {
+        height: 60,
+        width: '100%',
+    },
+    welcome: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    countContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginBottom: 20,
+    },
+    activeTasks: {
+        alignItems: 'center',
+    },
+    completedTask: {
+        alignItems: 'center',
+    },
+    count: {
+        backgroundColor: '#5ccb51',
+        borderRadius: 10,
+        padding: 10,
+    },
+    counting: {
+        fontSize: 16,
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
 };
 
 
