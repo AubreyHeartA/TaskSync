@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Feather } from '@expo/vector-icons';
 import styles from "../../config/styles";  
 
 const Home = () => {
+    const [searchQuery, setSearchQuery] = useState('');
     const [user, setUser] = useState({ firstName: '', lastName: '' });
     const [tasks, setTasks] = useState([]);
     
@@ -29,12 +31,28 @@ const Home = () => {
 
     const activeTasks = tasks.filter(task => task.status === "Pending");
     const completedTasks = tasks.filter(task => task.status === "Completed");
-
+    
+    const renderSearchBar = () => {
+        return (
+            <View style={styles.searchBarContainer}>
+                <View style={styles.searchIconContainer}>
+                    <Feather name="search" size={20} style={styles.searchIcon} />
+                </View>
+                <TextInput
+                    style={styles.searchBar}
+                    placeholder="Search task here"
+                    value={searchQuery}
+                    onChangeText={text => setSearchQuery(text)}
+                />
+            </View>
+        );
+    };
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <Image style={styles.logo} source={require('./../../../assets/banner.png')} resizeMode='contain' />
             </View>
+            {renderSearchBar()}
             <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
             
             <View style={styles.countContainer}>
@@ -59,6 +77,7 @@ const Home = () => {
                 {tasks.map(task => (
                     <View key={task.id} style={styles.taskCard}>
                         <Text>{task.title}</Text>
+                        <Text>Priority: {task.priority}</Text>
                         <Text>Status: {task.status}</Text>
                         <Text>Deadline: {task.deadline}</Text>
                     </View>

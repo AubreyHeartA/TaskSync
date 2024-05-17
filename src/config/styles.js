@@ -3,7 +3,8 @@ const globalstyles = {
     // Home.js
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        padding: 20,
+        backgroundColor: '#ffff',
     },
     header: {
         marginBottom: 10,
@@ -17,6 +18,17 @@ const globalstyles = {
         width: 150,
         height: 30,
         resizeMode: 'contain'
+    },
+    profileSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    profilePic: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginRight: 10,
     },
     welcome: {
         fontSize: 22,
@@ -66,6 +78,11 @@ const globalstyles = {
         color: '#333', // Dark text for section titles
         marginBottom: 10,
     },
+    taskCounterContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
     taskCard: {
         backgroundColor: '#ffffff', // White background for task cards
         padding: 15,
@@ -78,6 +95,7 @@ const globalstyles = {
         elevation: 3,
     },
     
+
 // Profile.js
 
     profileHeader: {
