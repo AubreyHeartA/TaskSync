@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
-import styles from "../../config/styles";  
+import styles from "../../config/styles";
 
 const Home = () => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [filteredTasks, setFilteredTasks] = useState([]); 
     const [user, setUser] = useState({ firstName: '', lastName: '' });
     const [tasks, setTasks] = useState([]);
     
@@ -34,25 +35,70 @@ const Home = () => {
     
     const renderSearchBar = () => {
         return (
-            <View style={styles.searchBarContainer}>
-                <View style={styles.searchIconContainer}>
-                    <Feather name="search" size={20} style={styles.searchIcon} />
-                </View>
-                <TextInput
-                    style={styles.searchBar}
-                    placeholder="Search task here"
-                    value={searchQuery}
-                    onChangeText={text => setSearchQuery(text)}
-                />
-            </View>
+        <View style={styles.searchBarContainer}>
+            <Feather name="search" size={20} style={styles.searchIcon} />
+            <TextInput
+                style={styles.searchInput}
+                placeholder="Search task here"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+            />
+        </View>
         );
     };
+
+    const handleFilterByTitle = (title) => {
+        const filteredTasks = tasks.filter((t) =>
+        t.title.toLowerCase().includes(title.toLowerCase())
+        );
+        setFilteredTasks(filteredTasks);
+    };
+
+    useEffect(() => {
+        handleFilterByTitle(searchQuery);
+    }, [searchQuery]);
+
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.header}>
-                <Image style={styles.logo} source={require('./../../../assets/banner.png')} resizeMode='contain' />
+        <ScrollView style={{ flex: 1, padding: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+            <Image
+                source={require('./../../../assets/banner.png')} // Make sure the path is correct
+                style={{ width: 150, height: 40, resizeMode: 'contain', marginRight: 50 }}
+            />
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    backgroundColor: '#fff',
+                    borderRadius: 20,
+                    padding: 8,
+                    alignItems: 'center',
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 3 },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 5,
+                    elevation: 5,
+                    marginRight: 5
+                }}>
+                    <View style={{
+                        backgroundColor: '#2ECC71',
+                        borderRadius: 15,
+                        width: 25,
+                        height: 25,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginRight: 10
+                    }}>
+                        <Feather name="search" size={20} color="white" />
+                    </View>
+                    <TextInput
+                        style={{ flex: 1, fontSize: 14 }}
+                        placeholder="Search task"
+                        value={searchQuery}
+                        onChangeText={text => setSearchQuery(text)}
+                    />
+                </View>
             </View>
-            {renderSearchBar()}
+            
             <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
             
             <View style={styles.countContainer}>

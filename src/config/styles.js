@@ -4,20 +4,20 @@ const globalstyles = {
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#ffff',
     },
     header: {
-        marginBottom: 10,
+        
         flexDirection: 'row',
-        justifyContent: 'space-between', 
-        alignItems: 'center',
+        justifyContent: 'flex-start', 
         paddingVertical: 10,
         paddingHorizontal: 15,
+        marginBottom: 10,
     },
     logo: {
-        width: 150,
-        height: 30,
-        resizeMode: 'contain'
+        width: 10,
+        height: 10,
+        resizeMode: 'contain',
+        marginRight: 10,
     },
     profileSection: {
         flexDirection: 'row',
@@ -94,7 +94,6 @@ const globalstyles = {
         shadowRadius: 2.22,
         elevation: 3,
     },
-    
 
 // Profile.js
 
