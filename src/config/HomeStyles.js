@@ -59,7 +59,6 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
         color: '#333',
-        marginVertical: 20,
     },
     countContainer: {
         flexDirection: 'row',
