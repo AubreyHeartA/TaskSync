@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flex: 1, 
         padding: 20, 
         paddingBottom: 80,
-        backgroundColor: "#f7f7f7", 
+        backgroundColor: "#FFFFFF", 
     }, 
     title: { 
         fontSize: 28, 
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     completedSectionHeader: {
-        backgroundColor: "#f7f7f7",
+        backgroundColor: "#ffff",
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     activeSectionHeader: {
-        backgroundColor: "#f7f7f7",
+        backgroundColor: "#ffff",
         padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: "#ccc",

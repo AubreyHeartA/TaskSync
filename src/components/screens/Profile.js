@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import globalstyles from "../../config/styles";
+import styles from "../../config/ProfileStyles";
 
-export default function Profile() {
+const Profile = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -225,6 +225,6 @@ export default function Profile() {
             </Modal>
         </ScrollView>
     );
-}
+};
 
-const styles = StyleSheet.create(globalstyles);
+export default Profile;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
-import styles from "../../config/styles";
+import styles from "../../config/HomeStyles";
 
 const Home = () => {
     const [searchQuery, setSearchQuery] = useState('');
