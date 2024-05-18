@@ -47,39 +47,18 @@ const Home = () => {
     }, [searchQuery]);
 
     return (
-        <ScrollView style={{ flex: 1, padding: 20 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+        <ScrollView style={styles.container}>
+            <View style={styles.searchSection}>
             <Image
-                source={require('./../../../assets/banner.png')} // Make sure the path is correct
-                style={{ width: 150, height: 40, resizeMode: 'contain', marginRight: 50 }}
+                source={require('./../../../assets/banner.png')} 
+                style={styles.bannerImage}
             />
-                <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    backgroundColor: '#fff',
-                    borderRadius: 20,
-                    padding: 8,
-                    alignItems: 'center',
-                    shadowColor: '#000',
-                    shadowOffset: { width: 0, height: 3 },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 5,
-                    elevation: 5,
-                    marginRight: 5
-                }}>
-                    <View style={{
-                        backgroundColor: '#2ECC71',
-                        borderRadius: 15,
-                        width: 25,
-                        height: 25,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginRight: 10
-                    }}>
+                <View style={styles.searchBarContainer}>
+                    <View style={styles.searchIcon}>
                         <Feather name="search" size={20} color="white" />
                     </View>
                     <TextInput
-                        style={{ flex: 1, fontSize: 14 }}
+                        style={styles.searchInput}
                         placeholder="Search task"
                         value={searchQuery}
                         onChangeText={text => setSearchQuery(text)}
@@ -102,10 +81,10 @@ const Home = () => {
                             <Feather name="clock" size={40} color="white" style={styles.taskIcon} />
                             <Text style={styles.iconLabel}>Active</Text>
                         </View>
-                        <View style={styles.arrowNumberTask}>
-                            <Text style={styles.counterText}>{activeTasks.length} Tasks</Text>
-                            <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon}/>
-                        </View>
+                    </View>
+                    <View style={styles.arrowNumberTask}>
+                        <Text style={styles.counterText}>{activeTasks.length} Tasks</Text>
+                        <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon}/>
                     </View>
                 </View>
                 
@@ -115,10 +94,10 @@ const Home = () => {
                             <Feather name="check-circle" size={40} color="white" style={styles.taskIcon} />
                             <Text style={styles.iconLabel}>Completed</Text>
                         </View>
-                        <View style={styles.arrowNumberTask}>
-                            <Text style={styles.counterText}>{completedTasks.length} Tasks</Text>
-                            <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon} />
-                        </View>
+                    </View>
+                    <View style={styles.arrowNumberTask}>
+                        <Text style={styles.counterText}>{completedTasks.length} Tasks</Text>
+                        <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon} />
                     </View>
                 </View>
             </View>
