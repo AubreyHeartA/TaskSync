@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { ScrollView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
+import { useIsFocused } from '@react-navigation/native';
 import styles from "../../config/HomeStyles";
 
 const Home = () => {
+    const isFocused = useIsFocused();
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]); 
     const [user, setUser] = useState({ firstName: '', lastName: '' });
@@ -28,9 +30,10 @@ const Home = () => {
                 setTasks(JSON.parse(taskData));
             }
         };
-        
-        loadData();
-    }, []);
+        if (isFocused) {
+            loadData();
+        }
+    }, [isFocused]);
 
     const activeTasks = tasks.filter(task => task.status === "Pending");
     const completedTasks = tasks.filter(task => task.status === "Completed");

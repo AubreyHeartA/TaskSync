@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Modal, Alert } from "react-native";
 import { Icon, Button, Divider, List } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Linking } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import styles from "../../config/ProfileStyles";
@@ -74,8 +73,6 @@ const Profile = () => {
                 quality: 1,
             });
     
-            console.log('ImagePicker result:', result);
-    
             if (result.cancelled || !result.uri) {
                 return;
             }
@@ -108,11 +105,7 @@ const Profile = () => {
     };
 
     return (
-        <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: "#fff" }}
-        >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} style={{ backgroundColor: "#fff" }}>
             <Text style={styles.profileHeader}>Profile</Text>
             <View style={styles.profileContainer}>
                 <TouchableOpacity onPress={selectProfilePhoto}>

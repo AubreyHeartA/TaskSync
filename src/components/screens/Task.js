@@ -6,10 +6,12 @@ import { Feather } from "@expo/vector-icons";
 import styles from "../../config/TaskStyles";
 import TaskModal from "../forms/TaskModal";
 import TaskList from "../forms/TaskList";
+import { useIsFocused } from '@react-navigation/native';
 
 const backgroundImage = require("../../../assets/emptyImage.png");
 
 const Task = ({ route }) => {
+  const isFocused = useIsFocused();
   const [tasks, setTasks] = useState([]);
   const [task, setTask] = useState({
     title: "",
@@ -52,7 +54,7 @@ const Task = ({ route }) => {
     };
 
     loadData();
-  }, []);
+  }, [isFocused]);
 
 // After loading tasks, update the counts
   useEffect(() => {
