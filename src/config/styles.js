@@ -6,7 +6,6 @@ const globalstyles = {
         padding: 20,
     },
     header: {
-        
         flexDirection: 'row',
         justifyContent: 'flex-start', 
         paddingVertical: 10,
@@ -78,10 +77,47 @@ const globalstyles = {
         color: '#333', // Dark text for section titles
         marginBottom: 10,
     },
-    taskCounterContainer: {
+    taskCounter: {
         flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 20,
+        flex: 1,
+        marginHorizontal: 5,
         justifyContent: 'space-between',
-        marginBottom: 20,
+    },
+    iconWithLabel: {
+        alignItems: 'center', // Aligns the icon and text vertically
+    },
+    iconLabel: {
+        color: 'white',
+        fontSize: 20, // Smaller font size for the label
+        marginTop: 4, // Spacing between the icon and text label
+        fontWeight: 'bold',
+    },
+    activeTaskCounter: {
+        backgroundColor: '#FFA07A', // Soft brown
+    },
+    completedTaskCounter: {
+        backgroundColor: '#3CB371', // Vibrant green
+    },
+    counterText: {
+        color: 'white',
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 10,
+    },
+    taskIcon: {
+        marginTop: 10,
+    },
+    arrowNumberTask: {
+        flexDirection: 'row', // Ensures horizontal layout
+        alignItems: 'center', // Vertically center the contents
+        justifyContent: 'flex-end', // Aligns children to the right, adjust as needed
+    },
+    chevronIcon: {
+        marginTop: 10,
     },
     taskCard: {
         backgroundColor: '#ffffff', // White background for task cards
@@ -206,6 +242,17 @@ const globalstyles = {
         fontSize: 16,
         color: '#ffffff',
         fontWeight: 'bold',
+    },
+    profileSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    profilePic: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginRight: 10,
     },
 };
 

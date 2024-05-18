@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TextInput } from 'react-native';
+import { ScrollView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 import styles from "../../config/styles";
@@ -15,11 +15,13 @@ const Home = () => {
             // Fetch user details
             const firstNameValue = await AsyncStorage.getItem('firstName');
             const lastNameValue = await AsyncStorage.getItem('lastName');
+            const profilePhotoUri = await AsyncStorage.getItem('profilePhoto');
             const taskData = await AsyncStorage.getItem('tasks');
 
             setUser({
                 firstName: firstNameValue || 'User',
-                lastName: lastNameValue || ''
+                lastName: lastNameValue || '',
+                profilePhoto: profilePhotoUri || '../../../assets/blank-profile-picture.png',
             });
 
             if (taskData) {
@@ -33,20 +35,6 @@ const Home = () => {
     const activeTasks = tasks.filter(task => task.status === "Pending");
     const completedTasks = tasks.filter(task => task.status === "Completed");
     
-    const renderSearchBar = () => {
-        return (
-        <View style={styles.searchBarContainer}>
-            <Feather name="search" size={20} style={styles.searchIcon} />
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Search task here"
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-            />
-        </View>
-        );
-    };
-
     const handleFilterByTitle = (title) => {
         const filteredTasks = tasks.filter((t) =>
         t.title.toLowerCase().includes(title.toLowerCase())
@@ -98,22 +86,40 @@ const Home = () => {
                     />
                 </View>
             </View>
-            
-            <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
+
+            <View style={styles.profileSection}>
+                <Image
+                    source={{ uri: user.profilePhoto }}
+                    style={styles.profilePhoto}
+                />
+                <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
+            </View>
             
             <View style={styles.countContainer}>
-                <View style={styles.activeTasks}>
-                    <View style={styles.count}>
-                        <Text style={styles.counting}>{activeTasks.length}</Text>
+                <View style={[styles.taskCounter, styles.activeTaskCounter]}>
+                    <View style={styles.verticalLayout}>
+                        <View style={styles.iconWithLabel}>
+                            <Feather name="clock" size={40} color="white" style={styles.taskIcon} />
+                            <Text style={styles.iconLabel}>Active</Text>
+                        </View>
+                        <View style={styles.arrowNumberTask}>
+                            <Text style={styles.counterText}>{activeTasks.length} Tasks</Text>
+                            <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon}/>
+                        </View>
                     </View>
-                    <Text style={styles.taskText}>Active Tasks</Text>
                 </View>
-
-                <View style={styles.completedTask}>
-                    <View style={styles.count}>
-                        <Text style={styles.counting}>{completedTasks.length}</Text>
+                
+                <View style={[styles.taskCounter, styles.completedTaskCounter]}>
+                    <View style={styles.verticalLayout}>
+                        <View style={styles.iconWithLabel}>
+                            <Feather name="check-circle" size={40} color="white" style={styles.taskIcon} />
+                            <Text style={styles.iconLabel}>Completed</Text>
+                        </View>
+                        <View style={styles.arrowNumberTask}>
+                            <Text style={styles.counterText}>{completedTasks.length} Tasks</Text>
+                            <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon} />
+                        </View>
                     </View>
-                    <Text style={styles.taskText}>Tasks Completed</Text>
                 </View>
             </View>
 
