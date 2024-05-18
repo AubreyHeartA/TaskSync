@@ -5,8 +5,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from './../screens/Home';
 import Task from './../screens/Task';
 import Profile from './../screens/Profile';
-// import Register from '../forms/Register';
-// import Login from '../forms/Login';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,14 +23,6 @@ const customIcons = {
   },
 };
 export default function Navigation() {
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-//   useEffect(() => {
-//     // Add your logic to check the user's login state
-//     // Example: AsyncStorage.getItem("isLoggedIn").then(value => setIsLoggedIn(!!value));
-//   }, []);
-
-
 
   return (
     <Tab.Navigator
@@ -71,20 +61,7 @@ export default function Navigation() {
       <Tab.Screen name="Profile" component={Profile} options={{
         tabBarLabel: 'Profile',
       }} />
-{/* 
-      {}
-      {isLoggedIn ? null : (
-        <Tab.Screen
-          options={{
-            tabBarButton: () => null, 
-            tabBarIcon: () => null, 
-          }}
-          name="LoginForm"
-          component={LoginForm}
-        />
-      )}
 
-      {} */}
       
     </Tab.Navigator>
   );

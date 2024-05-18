@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        paddingRight: 41,
     },
     chevronIcon: {
         marginTop: 10,
