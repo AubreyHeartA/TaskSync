@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Image, TextInput } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
@@ -50,12 +50,12 @@ const Home = () => {
     }, [searchQuery]);
 
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={styles.searchSection}>
-            <Image
-                source={require('./../../../assets/banner.png')} 
-                style={styles.bannerImage}
-            />
+                <Image
+                    source={require('./../../../assets/banner.png')} 
+                    style={styles.bannerImage}
+                />
                 <View style={styles.searchBarContainer}>
                     <View style={styles.searchIcon}>
                         <Feather name="search" size={20} color="white" />
@@ -87,7 +87,6 @@ const Home = () => {
                     </View>
                     <View style={styles.arrowNumberTask}>
                         <Text style={styles.counterText}>{activeTasks.length} Tasks</Text>
-                        <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon}/>
                     </View>
                 </View>
                 
@@ -100,15 +99,13 @@ const Home = () => {
                     </View>
                     <View style={styles.arrowNumberTask}>
                         <Text style={styles.counterText}>{completedTasks.length} Tasks</Text>
-                        <Feather name="chevron-right" size={20} color="white" style={styles.chevronIcon} />
                     </View>
                 </View>
             </View>
 
-            {/* Optionally display a list of active tasks, can be a detailed list or a simple card view */}
-            <View>
-                <Text style={styles.sectionTitle}>All Tasks</Text>
-                {tasks.map(task => (
+            <Text style={styles.sectionTitle}>All Tasks</Text>
+            <ScrollView style={styles.taskListContainer}>
+                {filteredTasks.map(task => (
                     <View key={task.id} style={styles.taskCard}>
                         <Text style={styles.taskTitle}>{task.title}</Text>
                         <Text style={styles.taskStatus}>Status: {task.status}</Text>
@@ -116,8 +113,8 @@ const Home = () => {
                         <Text style={styles.taskCreated}>Created: {task.createdAt}</Text>
                     </View>
                 ))}
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     );
 };
 

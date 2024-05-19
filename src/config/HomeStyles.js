@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#FFFFFF', // Set the background to white as requested
+        backgroundColor: '#FFFFFF',
     },
     searchSection: {
         flexDirection: 'row', 
@@ -12,10 +12,10 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     bannerImage: {
-        width: 150, 
+        width: 140, 
         height: 40, 
         resizeMode: 'contain', 
-        marginRight: 50
+        marginRight: 40
     },
     searchBarContainer: {
         flex: 1,
@@ -47,16 +47,10 @@ const styles = StyleSheet.create({
     profileSection: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 20,
-    },
-    profilePhoto: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        marginRight: 10,
+        marginBottom: 10,
     },
     welcome: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: 'bold',
         color: '#333',
     },
@@ -74,18 +68,13 @@ const styles = StyleSheet.create({
     },
     iconLabel: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 18,
         marginTop: 4,
         fontWeight: 'bold',
     },
     arrowNumberTask: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingRight: 41,
-    },
-    chevronIcon: {
-        marginTop: 10,
     },
     taskCard: {
         backgroundColor: '#ffffff',
@@ -100,7 +89,7 @@ const styles = StyleSheet.create({
         borderColor: "#black",
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 10,
@@ -124,30 +113,33 @@ const styles = StyleSheet.create({
     },
     counterText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'center',
         marginTop: 10,
-        marginLeft: 60,
     },
     taskIcon: {
         marginTop: 10,
     },
     taskTitle: {
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 2,
     },
     taskStatus: {
-        fontSize: 15,
+        fontSize: 14,
     },
     taskDeadline: {
         color: 'red',
-        fontSize: 15,
+        fontSize: 14,
     },
     taskCreated: {
         color: "#5497FF",
-        fontSize: 15,
+        fontSize: 14,
+    },
+    taskListContainer: {
+        marginBottom: 60,
+        flex: 1,
     },
 }); 
 

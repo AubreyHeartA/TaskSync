@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         flex: 1, 
     }, 
     taskText: { 
-        fontSize: 18, 
+        fontSize: 16, 
         fontWeight: "bold", 
         color: "#333", 
     }, 
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         color: "gray", 
     }, 
     taskDescription: { 
-        fontSize: 16, 
+        fontSize: 14, 
         color: "#666", 
     }, 
     taskTime: { 
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         color: "#666", 
     }, 
     taskStatus: { 
-        fontSize: 16, 
+        fontSize: 14, 
         color: "#666", 
     }, 
     buttonContainer: { 

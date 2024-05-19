@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Modal, Alert, Linking } from "react-native";
-import { Icon, Divider } from "react-native-paper";
+import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, Alert, Linking, Modal } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
 import styles from "../../config/ProfileStyles";
+import { Icon, Divider } from "react-native-paper";
 
 const Profile = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
@@ -14,7 +13,6 @@ const Profile = ({ navigation }) => {
     const [profilePhoto, setProfilePhoto] = useState(null);
 
     useEffect(() => {
-        // Load user data from AsyncStorage
         loadUserData();
     }, []);
 
@@ -38,12 +36,11 @@ const Profile = ({ navigation }) => {
     const saveChanges = async () => {
         try {
             const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
-            // Save user data to AsyncStorage
             await AsyncStorage.setItem('userCredentials', JSON.stringify({
                 firstName,
                 lastName,
                 email: workEmail,
-                password: userCredentials.password, // Maintain the existing password
+                password: userCredentials.password,
             }));
             await AsyncStorage.setItem('profilePhoto', profilePhoto || '');
 
@@ -60,7 +57,7 @@ const Profile = ({ navigation }) => {
             Alert.alert('Permission Denied', 'You need to grant permission to access the photo library.');
             return;
         }
-    
+
         try {
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -68,21 +65,19 @@ const Profile = ({ navigation }) => {
                 aspect: [1, 1],
                 quality: 1,
             });
-    
-            if (result.cancelled || !result.uri) {
+
+            if (result.cancelled) {
                 return;
             }
 
-            const profilePhotoUri = `${FileSystem.documentDirectory}profilePhoto.jpg`;
-            await FileSystem.copyAsync({
-                from: result.uri,
-                to: profilePhotoUri,
-            });
-    
-            // Update the profile photo state with the URI of the selected image
-            setProfilePhoto(profilePhotoUri);
-    
-            // You can also save the image to AsyncStorage here if needed
+            setProfilePhoto(result.uri);
+
+            await AsyncStorage.setItem('profilePhoto', result.uri || '');
+
+            // Force re-rendering of the image
+            setProfilePhoto(null);
+            setTimeout(() => setProfilePhoto(result.uri), 100);
+
             Alert.alert('Profile Photo Updated', 'Your profile photo has been successfully updated.');
         } catch (error) {
             console.error('Error selecting image:', error);
@@ -115,7 +110,7 @@ const Profile = ({ navigation }) => {
                 <View style={styles.profileContainer}>
                     <TouchableOpacity onPress={selectProfilePhoto}>
                         {profilePhoto ? (
-                            <Image key={profilePhoto} source={{ uri: profilePhoto }} style={styles.profileImage} />
+                            <Image source={{ uri: profilePhoto }} style={styles.profileImage} key={profilePhoto} />
                         ) : (
                             <Image source={require('../../../assets/blank-profile-picture.png')} style={styles.profileImage} />
                         )}
@@ -151,7 +146,7 @@ const Profile = ({ navigation }) => {
                 <Divider style={{ marginTop: 10 }} />
                 <View style={styles.actionsContainer}>
                     <Text style={styles.sectionHeader}>Actions:</Text>
-                                
+
                     <TouchableOpacity style={styles.actions} onPress={chatWithUs}>
                         <Icon source="message-text-outline" size={24} color="black" />
                         <Text style={styles.actionsItem}>Chat With Us</Text>
@@ -172,7 +167,7 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.actionsItem}>Log Out</Text>
                     </TouchableOpacity>
                 </View>
-                
+
                 <Modal
                     animationType="slide"
                     transparent={false}
@@ -182,7 +177,7 @@ const Profile = ({ navigation }) => {
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 20 }}>Edit Profile</Text>
-                            
+
                             <View style={styles.information}>
                                 <Text>First Name</Text>
                                 <TextInput
