@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
+        borderColor: "#black",
     },
     sectionTitle: {
         fontSize: 18,
@@ -130,6 +131,23 @@ const styles = StyleSheet.create({
     },
     taskIcon: {
         marginTop: 10,
+    },
+    taskTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#333',
+        marginBottom: 2,
+    },
+    taskStatus: {
+        fontSize: 15,
+    },
+    taskDeadline: {
+        color: 'red',
+        fontSize: 15,
+    },
+    taskCreated: {
+        color: "#5497FF",
+        fontSize: 15,
     },
 }); 
 

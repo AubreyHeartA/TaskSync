@@ -110,10 +110,10 @@ const Home = () => {
                 <Text style={styles.sectionTitle}>All Tasks</Text>
                 {tasks.map(task => (
                     <View key={task.id} style={styles.taskCard}>
-                        <Text>{task.title}</Text>
-                        <Text>Priority: {task.priority}</Text>
-                        <Text>Status: {task.status}</Text>
-                        <Text>Deadline: {task.deadline}</Text>
+                        <Text style={styles.taskTitle}>{task.title}</Text>
+                        <Text style={styles.taskStatus}>Status: {task.status}</Text>
+                        <Text style={styles.taskDeadline}>Deadline: {task.deadline}</Text>
+                        <Text style={styles.taskCreated}>Created: {task.createdAt}</Text>
                     </View>
                 ))}
             </View>
