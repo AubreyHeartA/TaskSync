@@ -101,6 +101,15 @@ const Profile = ({ navigation }) => {
             .catch((err) => console.error('An error occurred', err));
     };
 
+    const handleLogout = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken');
+            navigation.replace('Login');
+        } catch (error) {
+            Alert.alert('Error', 'An error occurred during logout');
+        }
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
@@ -163,7 +172,7 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.actionsItem}>App Version 1.0.0</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.actions}>
+                    <TouchableOpacity style={styles.actions} onPress={handleLogout}>
                         <Icon source="logout" size={24} color="black" />
                         <Text style={styles.actionsItem}>Log Out</Text>
                     </TouchableOpacity>
