@@ -69,9 +69,9 @@ function MainApp() {
   );
 }
 
-export default function Navigation() {
+export default function Navigation({ initialRouteName }) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRouteName}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="MainApp" component={MainApp} />

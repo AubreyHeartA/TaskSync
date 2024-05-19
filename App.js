@@ -10,7 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navigation from './src/components/navigation/Navigation';
 import LandingPage from "./src/components/forms/LandingPage";
 
-
 export default function App() {
   const [showLandingPage, setShowLandingPage] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +43,7 @@ export default function App() {
             {showLandingPage ? (
               <LandingPage onStart={handleStart} />
             ) : (
-              userToken ? <Navigation /> : <Navigation initialRouteName="Register" />
+              userToken ? <Navigation initialRouteName="MainApp" /> : <Navigation initialRouteName="Login" />
             )}
           </NavigationContainer>
         </SafeAreaView>
