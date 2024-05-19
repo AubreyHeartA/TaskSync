@@ -1,24 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Navigation from './src/components/navigation/Navigation';
 import LandingPage from "./src/components/forms/LandingPage";
-import Login from './src/components/forms/Login';
-import Register from './src/components/forms/Register';
+
 
 export default function App() {
-
   const [showLandingPage, setShowLandingPage] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userToken, setUserToken] = useState(null);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const token = await AsyncStorage.getItem('userToken');
+      setUserToken(token);
+      setIsLoading(false);
+    };
+
+    checkLoginStatus();
+  }, []);
 
   const handleStart = () => {
     setShowLandingPage(false);
   };
 
+  if (isLoading) {
+    // You can render a loading screen here if needed
+    return null;
+  }
 
   return (
     <PaperProvider>
@@ -29,7 +44,7 @@ export default function App() {
             {showLandingPage ? (
               <LandingPage onStart={handleStart} />
             ) : (
-              <Navigation />
+              userToken ? <Navigation /> : <Navigation initialRouteName="Register" />
             )}
           </NavigationContainer>
         </SafeAreaView>

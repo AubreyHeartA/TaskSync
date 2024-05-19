@@ -1,12 +1,16 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './../screens/Home';
 import Task from './../screens/Task';
 import Profile from './../screens/Profile';
+import Login from './../forms/Login';
+import Register from './../forms/Register';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const customIcons = {
   Home: {
@@ -22,8 +26,8 @@ const customIcons = {
     inactive: require('../../../assets/profile-inactive.png')
   },
 };
-export default function Navigation() {
 
+function MainApp() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -61,8 +65,16 @@ export default function Navigation() {
       <Tab.Screen name="Profile" component={Profile} options={{
         tabBarLabel: 'Profile',
       }} />
-
-      
     </Tab.Navigator>
+  );
+}
+
+export default function Navigation() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="MainApp" component={MainApp} />
+    </Stack.Navigator>
   );
 }
