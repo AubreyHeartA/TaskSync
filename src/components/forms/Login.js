@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
-
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,10 +9,24 @@ const Login = ({ navigation }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleLogin = async () => {
-    // Handle login logic, e.g., authenticate with your server
-    // For demonstration, we'll just save the email in AsyncStorage
-    await AsyncStorage.setItem('userToken', 'dummy-auth-token');
-    navigation.replace('MainApp');
+    // Simple validation
+    if (!email || !password) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    try {
+      const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
+      if (userCredentials && userCredentials.email === email && userCredentials.password === password) {
+        await AsyncStorage.setItem('userToken', 'dummy-auth-token');
+        Alert.alert('Success', 'Login successful');
+        navigation.replace('MainApp');
+      } else {
+        Alert.alert('Error', 'Invalid email or password');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'An error occurred during login');
+    }
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
 
 const Register = ({ navigation }) => {
@@ -11,11 +12,31 @@ const Register = ({ navigation }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
 
+  const handleRegister = async () => {
+    // Simple validation
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
 
-  const handleRegister = () => {
-    // Handle registration logic, e.g., register with your server
-    // For demonstration, we'll just navigate back to login
-    navigation.navigate('Login');
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match');
+      return;
+    }
+
+    // Store user credentials
+    try {
+      await AsyncStorage.setItem('userCredentials', JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+      }));
+      Alert.alert('Success', 'Registration successful');
+      navigation.navigate('Login');
+    } catch (error) {
+      Alert.alert('Error', 'An error occurred during registration');
+    }
   };
 
   return (
@@ -23,7 +44,7 @@ const Register = ({ navigation }) => {
       <Image source={require('../../../assets/favicon.png')} style={styles.logo} />
       <Text style={styles.title}>Create an account</Text>
       <Text style={styles.subtitle}>Enter your details to create an account</Text>
-      
+
       <Text style={styles.inputLabel}>First Name</Text>
       <TextInput
         style={styles.input}
@@ -75,7 +96,7 @@ const Register = ({ navigation }) => {
           <Feather name={isConfirmPasswordVisible ? "eye" : "eye-off"} size={20} style={styles.eyeIcon} />
         </TouchableOpacity>
       </View>
-    
+
       <TouchableOpacity
         style={styles.button}
         onPress={handleRegister}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Modal, Alert } from "react-native";
-import { Icon, Button, Divider, List } from "react-native-paper";
+import { SafeAreaView, ScrollView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Modal, Alert, Linking } from "react-native";
+import { Icon, Divider } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -20,21 +20,14 @@ const Profile = () => {
 
     const loadUserData = async () => {
         try {
-            const firstNameValue = await AsyncStorage.getItem('firstName');
-            const lastNameValue = await AsyncStorage.getItem('lastName');
-            const workEmailValue = await AsyncStorage.getItem('workEmail');
+            const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
             const profilePhotoUri = await AsyncStorage.getItem('profilePhoto');
-
-            if (firstNameValue !== null) {
-                setFirstName(firstNameValue);
+            if (userCredentials) {
+                setFirstName(userCredentials.firstName);
+                setLastName(userCredentials.lastName);
+                setWorkEmail(userCredentials.email);
             }
-            if (lastNameValue !== null) {
-                setLastName(lastNameValue);
-            }
-            if (workEmailValue !== null) {
-                setWorkEmail(workEmailValue);
-            }
-            if (profilePhotoUri !== null) {
+            if (profilePhotoUri) {
                 setProfilePhoto(profilePhotoUri);
             }
         } catch (e) {
@@ -45,13 +38,15 @@ const Profile = () => {
     const saveChanges = async () => {
         try {
             // Save user data to AsyncStorage
-            await AsyncStorage.setItem('firstName', firstName);
-            await AsyncStorage.setItem('lastName', lastName);
-            await AsyncStorage.setItem('workEmail', workEmail);
+            await AsyncStorage.setItem('userCredentials', JSON.stringify({
+                firstName,
+                lastName,
+                email: workEmail,
+                password: userCredentials.password, // Maintain the existing password
+            }));
             await AsyncStorage.setItem('profilePhoto', profilePhoto || '');
 
             Alert.alert('Profile Updated', 'Your profile has been successfully updated.');
-
             setModalVisible(false);
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -94,7 +89,7 @@ const Profile = () => {
         }
     };
 
-    const chatWIthUs = () => {
+    const chatWithUs = () => {
         Linking.openURL("https://m.me/claricedomingo07")
             .catch((err) => console.error('An error occurred', err));
     };
@@ -146,7 +141,7 @@ const Profile = () => {
                     <Text style={styles.actionsItem}>Help and Support</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.actions} onPress={chatWIthUs}>
+                <TouchableOpacity style={styles.actions} onPress={chatWithUs}>
                     <Icon source="message-text-outline" size={24} color="black" />
                     <Text style={styles.actionsItem}>Chat With Us</Text>
                 </TouchableOpacity>
