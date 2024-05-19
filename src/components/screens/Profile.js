@@ -4,7 +4,6 @@ import { Icon, Divider } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import { MaterialIcons } from 'react-native-vector-icons';
 import styles from "../../config/ProfileStyles";
 
 const Profile = ({ navigation }) => {
@@ -113,10 +112,6 @@ const Profile = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
-                <View style={styles.header}>
-                    <MaterialIcons name="arrow-back" size={30} onPress={() => navigation.goBack()} />
-                    <Text style={styles.profileHeader}>Edit Profile</Text>
-                </View>
                 <View style={styles.profileContainer}>
                     <TouchableOpacity onPress={selectProfilePhoto}>
                         {profilePhoto ? (

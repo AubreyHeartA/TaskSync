@@ -6,25 +6,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 10,
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 15,
-        paddingTop: 15,
-    },
-    profileHeader: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
     profileContainer: {
         alignItems: "center", 
         padding: 20,
     },
     profileImage: {
-        width: 130,
-        height: 130,
+        width: 140,
+        height: 140,
         borderRadius: 65,
         marginBottom: 10,
     },
