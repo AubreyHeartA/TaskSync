@@ -4,9 +4,10 @@ import { Icon, Divider } from "react-native-paper";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import { MaterialIcons } from 'react-native-vector-icons';
 import styles from "../../config/ProfileStyles";
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -37,6 +38,7 @@ const Profile = () => {
 
     const saveChanges = async () => {
         try {
+            const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
             // Save user data to AsyncStorage
             await AsyncStorage.setItem('userCredentials', JSON.stringify({
                 firstName,
@@ -100,118 +102,123 @@ const Profile = () => {
     };
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false} style={{ backgroundColor: "#fff" }}>
-            <Text style={styles.profileHeader}>Profile</Text>
-            <View style={styles.profileContainer}>
-                <TouchableOpacity onPress={selectProfilePhoto}>
-                    {profilePhoto ? (
-                        <Image key={profilePhoto} source={{ uri: profilePhoto }} style={{ width: 200, height: 200, borderRadius: 100 }} />
-                    ) : (
-                        <Icon source="account-circle" size={200} />
-                    )}
-                </TouchableOpacity>
-                <Text style={styles.greetings}>Hello, {firstName} {lastName}!</Text>
-            </View>
-
-            <Divider />
-            <View style={{ padding: 20 }}>
-                <Text>Account Information:</Text>
-
-                <View style={styles.displayInfo}>
-                    <Text style={styles.label}>Name</Text>
-                    <Text>{firstName} {lastName}</Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }} showsVerticalScrollIndicator={false}>
+                <View style={styles.header}>
+                    <MaterialIcons name="arrow-back" size={30} onPress={() => navigation.goBack()} />
+                    <Text style={styles.profileHeader}>Edit Profile</Text>
+                </View>
+                <View style={styles.profileContainer}>
+                    <TouchableOpacity onPress={selectProfilePhoto}>
+                        {profilePhoto ? (
+                            <Image key={profilePhoto} source={{ uri: profilePhoto }} style={styles.profileImage} />
+                        ) : (
+                            <Image source={require('../../../assets/blank-profile-picture.png')} style={styles.profileImage} />
+                        )}
+                    </TouchableOpacity>
+                    <Text style={styles.greetings}>Hello, {firstName} {lastName}!</Text>
                 </View>
 
-                <View style={styles.displayInfo}>
-                    <Text style={styles.label}>Email</Text>
-                    <Text>{workEmail}</Text>
-                </View>
-
-                <TouchableOpacity style={styles.updateButton} onPress={() => setModalVisible(true)} >
-                    <Text style={styles.textButton}>Edit Profile</Text>
-                </TouchableOpacity>
-            </View>
-            
-            <Divider style={{ marginTop: 10 }} />
-            <View style={styles.actionsContainer}>
-                <Text>Actions</Text>
-                            
-                <TouchableOpacity style={styles.actions}>
-                    <Icon source="help-circle-outline" size={24} color="black" />
-                    <Text style={styles.actionsItem}>Help and Support</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actions} onPress={chatWithUs}>
-                    <Icon source="message-text-outline" size={24} color="black" />
-                    <Text style={styles.actionsItem}>Chat With Us</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actions} onPress={reportIssue}>
-                    <Icon source="exclamation-thick" size={24} color="black" />
-                    <Text style={styles.actionsItem}>Report an Issue</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actions}>
-                    <Icon source="layers-outline" size={24} color="black" />
-                    <Text style={styles.actionsItem}>App Version 1.0.0</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actions}>
-                    <Icon source="logout" size={24} color="black" />
-                    <Text style={styles.actionsItem}>Log Out</Text>
-                </TouchableOpacity>
-            </View>
-            
-            
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 80 }}>Edit Profile</Text>
-                        
-                        <View style={styles.information}>
-                            <Text>First Name</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Enter first name"
-                                value={firstName}
-                                onChangeText={text => setFirstName(text)}
-                            />
-                        </View>
-                        <View style={styles.information}>
-                            <Text>Last Name</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Enter last name"
-                                value={lastName}
-                                onChangeText={text => setLastName(text)}
-                            />
-                        </View>
-                        <View style={styles.information}>
-                            <Text>Email</Text>
-                            <TextInput
-                                style={styles.textInput}
-                                placeholder="Enter a valid email"
-                                value={workEmail}
-                                onChangeText={text => setWorkEmail(text)}
-                            />
-                        </View>
-
-                        <TouchableOpacity style={styles.saveButton} onPress={saveChanges} >
-                            <Text style={styles.textButton}>Save Changes</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => setModalVisible(false)} >
-                            <Text style={styles.textButton}>Cancel</Text>
-                        </TouchableOpacity>
+                <View style={styles.accountInfoContainer}>
+                    <Text style={styles.sectionHeader}>Account Information:</Text>
+                    <View style={styles.displayInfo}>
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            value={`${firstName} ${lastName}`}
+                            editable={false}
+                        />
                     </View>
+
+                    <View style={styles.displayInfo}>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput
+                            style={styles.textInput}
+                            value={workEmail}
+                            editable={false}
+                        />
+                    </View>
+
+                    <TouchableOpacity style={styles.updateButton} onPress={() => setModalVisible(true)} >
+                        <Text style={styles.updateButtonText}>Edit Profile</Text>
+                    </TouchableOpacity>
                 </View>
-            </Modal>
-        </ScrollView>
+                
+                <Divider style={{ marginTop: 10 }} />
+                <View style={styles.actionsContainer}>
+                    <Text style={styles.sectionHeader}>Actions:</Text>
+                                
+                    <TouchableOpacity style={styles.actions} onPress={chatWithUs}>
+                        <Icon source="message-text-outline" size={24} color="black" />
+                        <Text style={styles.actionsItem}>Chat With Us</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.actions} onPress={reportIssue}>
+                        <Icon source="exclamation-thick" size={24} color="black" />
+                        <Text style={styles.actionsItem}>Report an Issue</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.actions}>
+                        <Icon source="layers-outline" size={24} color="black" />
+                        <Text style={styles.actionsItem}>App Version 1.0.0</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.actions}>
+                        <Icon source="logout" size={24} color="black" />
+                        <Text style={styles.actionsItem}>Log Out</Text>
+                    </TouchableOpacity>
+                </View>
+                
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Text style={{ textAlign: 'center', fontSize: 20, marginBottom: 20 }}>Edit Profile</Text>
+                            
+                            <View style={styles.information}>
+                                <Text>First Name</Text>
+                                <TextInput
+                                    style={styles.textInput}
+                                    placeholder="Enter first name"
+                                    value={firstName}
+                                    onChangeText={text => setFirstName(text)}
+                                />
+                            </View>
+                            <View style={styles.information}>
+                                <Text>Last Name</Text>
+                                <TextInput
+                                    style={styles.textInput}
+                                    placeholder="Enter last name"
+                                    value={lastName}
+                                    onChangeText={text => setLastName(text)}
+                                />
+                            </View>
+                            <View style={styles.information}>
+                                <Text>Email</Text>
+                                <TextInput
+                                    style={styles.textInput}
+                                    placeholder="Enter a valid email"
+                                    value={workEmail}
+                                    onChangeText={text => setWorkEmail(text)}
+                                />
+                            </View>
+
+                            <TouchableOpacity style={styles.saveButton} onPress={saveChanges} >
+                                <Text style={styles.textButton}>Save Changes</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.cancelButton} onPress={() => setModalVisible(false)} >
+                                <Text style={styles.textButton}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
