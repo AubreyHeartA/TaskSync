@@ -28,7 +28,9 @@ const Home = () => {
             }
 
             if (taskData) {
-                setTasks(JSON.parse(taskData));
+                const allTasks = JSON.parse(taskData);
+                setTasks(allTasks);
+                setFilteredTasks(allTasks.filter(task => task.status === "Pending")); // Filter to show only active tasks
             }
         };
         if (isFocused) {
@@ -47,8 +49,11 @@ const Home = () => {
     };
 
     useEffect(() => {
-        handleFilterByTitle(searchQuery);
-    }, [searchQuery]);
+        const filtered = tasks.filter(task => 
+            task.status === "Pending" && task.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredTasks(filtered);
+    }, [searchQuery, tasks]);
 
     return (
         <View style={styles.container}>
