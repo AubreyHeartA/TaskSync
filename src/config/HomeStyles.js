@@ -6,16 +6,41 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: '#FFFFFF',
     },
+    headerSection: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        marginBottom: 10,
+    },
+    headerTextSection: {
+        flexDirection: 'column',
+    },
+    welcomeText: {
+        fontSize: 18,
+        color: '#333',
+    },
+    userNameText: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    profilePhoto: {
+        width: 70,
+        height: 70,
+        borderRadius: 50,
+        marginRight: 5,
+    },
     searchSection: {
         flexDirection: 'row', 
         alignItems: 'center', 
-        marginBottom: 20
+        marginBottom: 10
     },
     bannerImage: {
-        width: 140, 
+        width: 130, 
         height: 40, 
         resizeMode: 'contain', 
-        marginRight: 40
+        marginRight: 50
     },
     searchBarContainer: {
         flex: 1,

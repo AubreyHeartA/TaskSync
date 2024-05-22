@@ -9,7 +9,7 @@ const Home = () => {
     const isFocused = useIsFocused();
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]); 
-    const [user, setUser] = useState({ firstName: '', lastName: '' });
+    const [user, setUser] = useState({ firstName: '', lastName: '', profilePhoto: '' });
     const [tasks, setTasks] = useState([]);
     
     useEffect(() => {
@@ -69,12 +69,15 @@ const Home = () => {
                 </View>
             </View>
 
-            <View style={styles.profileSection}>
+            <View style={styles.headerSection}>
+                <View style={styles.headerTextSection}>
+                    <Text style={styles.welcomeText}>Welcome back,</Text>
+                    <Text style={styles.userNameText}>{user.firstName} {user.lastName}!</Text>
+                </View>
                 <Image
                     source={{ uri: user.profilePhoto }}
                     style={styles.profilePhoto}
                 />
-                <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
             </View>
             
             <View style={styles.countContainer}>

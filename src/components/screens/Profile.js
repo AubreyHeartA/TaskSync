@@ -67,18 +67,24 @@ const Profile = ({ navigation }) => {
             });
 
             if (result.cancelled) {
+                console.log('Image selection cancelled');
                 return;
             }
 
-            setProfilePhoto(result.uri);
+            const selectedUri = result.assets[0].uri;
+            console.log('Selected image URI:', selectedUri);
 
-            await AsyncStorage.setItem('profilePhoto', result.uri || '');
+            if (selectedUri) {
+                // Update profile photo state immediately
+                setProfilePhoto(selectedUri);
 
-            // Force re-rendering of the image
-            setProfilePhoto(null);
-            setTimeout(() => setProfilePhoto(result.uri), 100);
+                // Save profile photo URI to AsyncStorage
+                await AsyncStorage.setItem('profilePhoto', selectedUri);
 
-            Alert.alert('Profile Photo Updated', 'Your profile photo has been successfully updated.');
+                Alert.alert('Profile Photo Updated', 'Your profile photo has been successfully updated.');
+            } else {
+                Alert.alert('Error', 'There was an error selecting the profile photo.');
+            }
         } catch (error) {
             console.error('Error selecting image:', error);
             Alert.alert('Error', 'There was an error selecting the profile photo.');
