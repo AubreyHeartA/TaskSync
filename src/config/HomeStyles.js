@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     userNameText: {
-        fontSize: 26,
+        fontSize: 24,
         fontWeight: 'bold',
         color: '#333',
     },

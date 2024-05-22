@@ -15,16 +15,17 @@ const Home = () => {
     useEffect(() => {
         const loadData = async () => {
             // Fetch user details
-            const firstNameValue = await AsyncStorage.getItem('firstName');
-            const lastNameValue = await AsyncStorage.getItem('lastName');
+            const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
             const profilePhotoUri = await AsyncStorage.getItem('profilePhoto');
             const taskData = await AsyncStorage.getItem('tasks');
 
-            setUser({
-                firstName: firstNameValue || 'User',
-                lastName: lastNameValue || '',
-                profilePhoto: profilePhotoUri || '../../../assets/blank-profile-picture.png',
-            });
+            if (userCredentials) {
+                setUser({
+                    firstName: userCredentials.firstName,
+                    lastName: userCredentials.lastName,
+                    profilePhoto: profilePhotoUri || '../../../assets/blank-profile-picture.png',
+                });
+            }
 
             if (taskData) {
                 setTasks(JSON.parse(taskData));

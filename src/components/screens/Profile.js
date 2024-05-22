@@ -36,12 +36,13 @@ const Profile = ({ navigation }) => {
     const saveChanges = async () => {
         try {
             const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
-            await AsyncStorage.setItem('userCredentials', JSON.stringify({
+            const updatedCredentials = {
                 firstName,
                 lastName,
                 email: workEmail,
                 password: userCredentials.password,
-            }));
+            };
+            await AsyncStorage.setItem('userCredentials', JSON.stringify(updatedCredentials));
             await AsyncStorage.setItem('profilePhoto', profilePhoto || '');
 
             Alert.alert('Profile Updated', 'Your profile has been successfully updated.');
