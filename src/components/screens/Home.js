@@ -9,25 +9,28 @@ const Home = () => {
     const isFocused = useIsFocused();
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]); 
-    const [user, setUser] = useState({ firstName: '', lastName: '' });
+    const [user, setUser] = useState({ firstName: '', lastName: '', profilePhoto: '' });
     const [tasks, setTasks] = useState([]);
     
     useEffect(() => {
         const loadData = async () => {
             // Fetch user details
-            const firstNameValue = await AsyncStorage.getItem('firstName');
-            const lastNameValue = await AsyncStorage.getItem('lastName');
+            const userCredentials = JSON.parse(await AsyncStorage.getItem('userCredentials'));
             const profilePhotoUri = await AsyncStorage.getItem('profilePhoto');
             const taskData = await AsyncStorage.getItem('tasks');
 
-            setUser({
-                firstName: firstNameValue || 'User',
-                lastName: lastNameValue || '',
-                profilePhoto: profilePhotoUri || '../../../assets/blank-profile-picture.png',
-            });
+            if (userCredentials) {
+                setUser({
+                    firstName: userCredentials.firstName,
+                    lastName: userCredentials.lastName,
+                    profilePhoto: profilePhotoUri || '../../../assets/blank-profile-picture.png',
+                });
+            }
 
             if (taskData) {
-                setTasks(JSON.parse(taskData));
+                const allTasks = JSON.parse(taskData);
+                setTasks(allTasks);
+                setFilteredTasks(allTasks.filter(task => task.status === "Pending")); // Filter to show only active tasks
             }
         };
         if (isFocused) {
@@ -46,8 +49,11 @@ const Home = () => {
     };
 
     useEffect(() => {
-        handleFilterByTitle(searchQuery);
-    }, [searchQuery]);
+        const filtered = tasks.filter(task => 
+            task.status === "Pending" && task.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredTasks(filtered);
+    }, [searchQuery, tasks]);
 
     return (
         <View style={styles.container}>
@@ -69,12 +75,15 @@ const Home = () => {
                 </View>
             </View>
 
-            <View style={styles.profileSection}>
+            <View style={styles.headerSection}>
+                <View style={styles.headerTextSection}>
+                    <Text style={styles.welcomeText}>Welcome back,</Text>
+                    <Text style={styles.userNameText}>{user.firstName} {user.lastName}!</Text>
+                </View>
                 <Image
                     source={{ uri: user.profilePhoto }}
                     style={styles.profilePhoto}
                 />
-                <Text style={styles.welcome}>Welcome back, {user.firstName} {user.lastName}!</Text>
             </View>
             
             <View style={styles.countContainer}>
