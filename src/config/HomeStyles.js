@@ -166,6 +166,12 @@ const styles = StyleSheet.create({
         marginBottom: 60,
         flex: 1,
     },
+    teamInfoLink: {
+        color: 'green',
+        fontSize: 16,
+        textAlign: 'center',
+        marginVertical: 20,
+    },
 }); 
 
 export default styles;

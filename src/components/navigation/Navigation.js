@@ -8,6 +8,7 @@ import Task from './../screens/Task';
 import Profile from './../screens/Profile';
 import Login from './../forms/Login';
 import Register from './../forms/Register';
+import TeamInfo from './../screens/TeamInfo';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,9 +19,13 @@ const customIcons = {
     inactive: require('../../../assets/home-inactive.png')
   },
   Task: {
-    active: require('../../../assets/task-active.png'),
-    inactive: require('../../../assets/task-inactive.png')
+    active: require('../../../assets/white.png'),
+    inactive: require('../../../assets/white.png')
   },
+  //Task: {
+    //active: require('../../../assets/task-active.png'),
+    //inactive: require('../../../assets/task-inactive.png')
+  //},
   Profile: {
     active: require('../../../assets/profile-active.png'),
     inactive: require('../../../assets/profile-inactive.png')
@@ -60,7 +65,8 @@ function MainApp() {
         tabBarLabel: 'Home',
       }} />
       <Tab.Screen name="Task" component={Task} options={{
-        tabBarLabel: 'Tasks',
+        //tabBarLabel: 'Tasks',
+        tabBarLabel: '',
       }} />
       <Tab.Screen name="Profile" component={Profile} options={{
         tabBarLabel: 'Profile',
@@ -75,6 +81,7 @@ export default function Navigation({ initialRouteName }) {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="MainApp" component={MainApp} />
+      <Stack.Screen name="TeamInfo" component={TeamInfo} />
     </Stack.Navigator>
   );
 }

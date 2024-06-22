@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, Text, Image, TextInput } from 'react-native';
+import { ScrollView, View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Feather } from '@expo/vector-icons';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import styles from "../../config/HomeStyles";
 
 const Home = () => {
     const isFocused = useIsFocused();
+    const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredTasks, setFilteredTasks] = useState([]); 
     const [user, setUser] = useState({ firstName: '', lastName: '', profilePhoto: '' });
@@ -122,6 +123,9 @@ const Home = () => {
                         <Text style={styles.taskCreated}>Created: {task.createdAt}</Text>
                     </View>
                 ))}
+                <TouchableOpacity onPress={() => navigation.navigate('TeamInfo')}>
+                    <Text style={styles.teamInfoLink}>Click here to see Team's info</Text>
+                </TouchableOpacity>
             </ScrollView>
         </View>
     );

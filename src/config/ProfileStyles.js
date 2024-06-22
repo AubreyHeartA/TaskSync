@@ -47,15 +47,18 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     updateButton: {
-        backgroundColor: '#00BF63',
-        padding: 15,
+        //backgroundColor: '#00BF63',
+        backgroundColor: 'white',
+        //padding: 15,
+        padding: 0,
         borderRadius: 10,
         alignItems: 'center',
     },
     updateButtonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 14,
+        //fontSize: 14,
+        fontSize: 1,
     },
     actionsContainer: {
         paddingHorizontal: 20,
